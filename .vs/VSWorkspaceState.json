@@ -1,7 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\packages"
+    "\\packages",
+    "\\packages\\mobile",
+    "\\packages\\shared",
+    "\\packages\\web",
+    "\\packages\\web\\eqariah",
+    "\\packages\\web\\eqariah\\src",
+    "\\packages\\web\\eqariah\\src\\app"
   ],
   "PreviewInSolutionExplorer": false
 }

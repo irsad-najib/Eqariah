@@ -4,11 +4,11 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
+  --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
@@ -30,4 +30,57 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Custom styles for navigation buttons */
+.swiper-button-prev,
+.swiper-button-next {
+  width: 40px !important;
+  height: 40px !important;
+  margin-top: -20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
+/* Custom styles for pagination dots */
+.swiper-pagination {
+  position: absolute !important;
+  bottom: 16px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 20 !important;
+}
+
+.swiper-pagination-bullet {
+  width: 8px !important;
+  height: 8px !important;
+  margin: 0 4px !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #10b981 !important; /* Warna hijau untuk dot aktif */
+  width: 24px !important; /* Dot aktif lebih panjang */
+  border-radius: 4px !important; /* Membuat dot aktif menjadi capsule shape */
+}
+
+/* Optional: Add hover effect to pagination bullets */
+.swiper-pagination-bullet:hover {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Slide transition effect */
+.swiper-slide {
+  transition: all 0.3s ease-in-out;
 }

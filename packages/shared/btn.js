@@ -1,13 +1,16 @@
-import react from "react";
-import { useState } from react;
+"use client"
+import React from "react";
 
-export default function Button() {
-    const handleButtonClick = () => {
-        setSelectedButton();
-    };
-
+function ButtonTheme() {
     const handleThemeClick = () => {
         setSelectedTheme();
     };
-
+    return (
+        <div>
+            <button onClick={handleThemeClick}>
+                learn more
+            </button>
+        </div>
+    )
 }
+export { Button, ButtonTheme }

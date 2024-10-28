@@ -73,7 +73,7 @@ export default function Navbar() {
                             alt="User Icon"
                             className="w-8 h-8"
                         />
-                        <NavLink href="/login" className="text-xl font-medium">
+                        <NavLink href="../login" className="text-xl font-medium">
                             Login
                         </NavLink>
                     </div>

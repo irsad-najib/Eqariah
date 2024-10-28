@@ -63,7 +63,7 @@ export default function login() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="bg-white p-[4%] rounded-lg shadow-lg w-full mx-[3%] md:m-[18%] lg:m-96">
+            <div className="bg-white p-[4%] lg:px-36 rounded-lg shadow-lg w-full mx-[3%] md:mx-[18%] lg:mx-[550px] ">
                 <h2 className=" text-[7vw] font-bold mb-[4%] text-center md:text-[3vw] lg:text-2xl">Login</h2>
 
                 {error && (
@@ -74,7 +74,7 @@ export default function login() {
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-gray-700 text-[3.5vw] font-bold mb-[1%]">
+                        <label className="block text-gray-700 text-[3.5vw] md:text-[2.5vw] lg:text-xl font-bold mb-[1%] lg:mb-1">
                             Email or Username
                         </label>
                         <input
@@ -82,14 +82,14 @@ export default function login() {
                             name="identifier"
                             value={formData.identifier}
                             onChange={handleChange}
-                            className="shadhow appearance-none border rounded w-full py-[2%] px-[3%] text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadhow appearance-none border rounded w-full py-[2%] lg:py-2 px-[3%] lg:px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="Enter Email or Username"
                             required
                         />
                     </div>
 
                     <div>
-                        <label className="block text-gray-700 text-[3.5vw] font-bold mb-[1%]">
+                        <label className="block text-gray-700 text-[3.5vw] md:text-[2.5vw] lg:text-xl font-bold mb-[1%] lg:mb-1">
                             Password
                         </label>
                         <div className="relative">
@@ -98,7 +98,7 @@ export default function login() {
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-[2%] px-[3%] text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-[2%] lg:py-2 px-[3%] lg:px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 placeholder="Enter password"
                                 required
                             />
@@ -119,13 +119,13 @@ export default function login() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="bg-green-600 hover:bg-green-700 text-white font-bold py-[2%] px-[4%] rounded focus:outline-none focus:shadow-outline w-full disabled:opacity-50 text-[4vw]"
+                        className="bg-green-600 hover:bg-green-700 text-white font-bold py-[2%] lg:py-2 px-[4%] lg:px-4 rounded focus:outline-none focus:shadow-outline w-full disabled:opacity-50 text-[4vw] md:text-[3vw] lg:text-xl"
                     >
                         {loading ? "loading..." : "login"}
                     </button>
                 </form>
 
-                <p className="mt-[6%] text-center text-[3vw] md:text-[2vw]">
+                <p className="mt-[6%] text-center text-[3vw] md:text-[2vw] lg:text-lg lg:mt-6">
                     Don't have an account?{" "}
                     <a href="../register" className="text-blue-500 hover:text-blue-700 "> Register here</a>
                 </p>

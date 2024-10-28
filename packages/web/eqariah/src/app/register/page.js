@@ -99,8 +99,8 @@ export default function Register() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="bg-white p-[4%] rounded-lg shadow-lg w-full mx-[3%]">
-                <h2 className="text-[7vw] font-bold mb-[4%] text-center">Register</h2>
+            <div className="bg-white p-[4%] lg:px-36 rounded-lg shadow-lg w-full mx-[3%] md:mx-[18%] lg:mx-[550px] ">
+                <h2 className=" text-[7vw] font-bold mb-[4%] text-center md:text-[3vw] lg:text-2xl">Register</h2>
 
                 {error && (
                     <div className="bg-red-100 border border-red-400 text-red-700 px-[3%] py-[3%] rounded mb-[3%]">
@@ -110,7 +110,7 @@ export default function Register() {
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-gray-700 text-[3.5vw] font-bold mb-[1%]">
+                        <label className="block text-gray-700 text-[3.5vw] md:text-[2.5vw] lg:text-xl font-bold mb-[1%] lg:mb-1">
                             Email
                         </label>
                         <input
@@ -125,7 +125,7 @@ export default function Register() {
                     </div>
 
                     <div>
-                        <label className="block text-gray-700 text-[3.5vw] font-bold mb-[1%]">
+                        <label className="block text-gray-700 text-[3.5vw] md:text-[2.5vw] lg:text-xl font-bold mb-[1%] lg:mb-1">
                             Username
                         </label>
                         <input
@@ -140,7 +140,7 @@ export default function Register() {
                     </div>
 
                     <div>
-                        <label className="block text-gray-700 text-[3.5vw] font-bold mb-[1%]">
+                        <label className="block text-gray-700 text-[3.5vw] md:text-[2.5vw] lg:text-xl font-bold mb-[1%] lg:mb-1">
                             Password
                         </label>
                         <div className="relative">
@@ -166,13 +166,13 @@ export default function Register() {
                             </button>
                         </div>
 
-                        <p className="text-[2.8vw] text-gray-500 mt-[0.7%]">
+                        <p className="text-[2.8vw] md:text-[2vw] text-gray-500 mt-[0.7%] lg:text-lg">
                             Password must be at least 8 characters long
                         </p>
                     </div>
 
                     <div>
-                        <label className="block text-gray-700 text-[3.5vw] font-bold mb-[1%]">
+                        <label className="block text-gray-700 text-[3.5vw] md:text-[2.5vw] lg:text-xl font-bold mb-[1%] lg:mb-1">
                             Confirm Password
                         </label>
                         <div className="relative">
@@ -207,13 +207,13 @@ export default function Register() {
                     <button
                         type="submit"
                         disabled={loading || !passwordMatch}
-                        className="bg-green-600 text-[4vw] hover:bg-green-700 text-white font-bold py-[2%] px-[4%] rounded focus:outline-none focus:shadow-outline w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="bg-green-600 hover:bg-green-700 text-white font-bold py-[2%] lg:py-2 px-[4%] lg:px-4 rounded focus:outline-none focus:shadow-outline w-full disabled:opacity-50 text-[4vw] md:text-[3vw] lg:text-xl"
                     >
                         {loading ? "Registering..." : "Register"}
                     </button>
                 </form>
 
-                <p className="mt-[6%] text-center text-[3vw]">
+                <p className="mt-[6%] text-center text-[3vw] md:text-[2vw] lg:text-lg lg:mt-6">
                     Already have an account?{" "}
                     <a href="/login" className="text-blue-500 hover:text-blue-700">
                         Login here

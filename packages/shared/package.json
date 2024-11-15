@@ -9,15 +9,16 @@
     "prisma:migrate": "prisma migrate deploy"
   },
   "dependencies": {
-    "@prisma/client": "^5.x.x",
+    "@prisma/client": "^5.22.0",
     "bcrypt": "^5.x.x",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.x.x",
-    "jsonwebtoken": "^9.x.x"
+    "jsonwebtoken": "^9.x.x",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "nodemon": "^3.x.x",
-    "prisma": "^5.x.x"
+    "prisma": "^5.22.0"
   }
 }

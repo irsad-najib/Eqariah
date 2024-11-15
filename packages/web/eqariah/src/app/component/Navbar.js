@@ -13,7 +13,7 @@ const NavLink = ({ href, children, className = "" }) => (
 
 const navLinks = [
     { href: "/about", label: "About" },
-    { href: "/prayer-times", label: "Prayer Times" },
+    { href: "../register_masjid", label: "mosque register" },
     { href: "/community", label: "Community" },
     { href: "/contacts", label: "Contacts" },
 ];

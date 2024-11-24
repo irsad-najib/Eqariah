@@ -46,10 +46,11 @@ model users {
   email      String       @unique(map: "email") @db.VarChar(100)
   pass       String       @db.VarChar(255)
   create_at  DateTime?    @default(now()) @db.Timestamp(0)
+  role  String? @default("user")
   inbox      inbox[]
   inbox_read inbox_read[]
 }
-
+model RegisterMosque{
   id            Int      @id @default(autoincrement())
   mosqueName    String
   phoneNumber   String

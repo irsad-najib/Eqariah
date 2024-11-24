@@ -14,8 +14,8 @@ const NavLink = ({ href, children, className = "" }) => (
 const navLinks = [
     { href: "/about", label: "About" },
     { href: "../register_masjid", label: "Mosque Register" },
-    { href: "/community", label: "Community" },
-    { href: "/contacts", label: "Contacts" },
+    { href: "../announcement", label: "announcement" },
+    { href: "../userManagement", label: "UserManagement" },
 ];
 
 export default function Navbar() {

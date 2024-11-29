@@ -3,11 +3,10 @@ const express = require('express');
 const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const authenticateToken = require('../middleware/auth');
-const isAdmin = require('../middleware/isAdmin');
 
 const prisma = new PrismaClient();
 
-router.get('/', authenticateToken, isAdmin, async (req, res, next) => {
+router.get('/', authenticateToken, async (req, res, next) => {
     try {
         const users = await prisma.user.findMany({
             select: {
@@ -27,7 +26,7 @@ router.get('/', authenticateToken, isAdmin, async (req, res, next) => {
 // Get user by ID
 router.get('/:id', authenticateToken, async (req, res, next) => {
     try {
-        const user = await prisma.user.findUnique({
+        const user = await prisma.users.findUnique({
             where: {
                 id: parseInt(req.params.id)
             },
@@ -91,7 +90,7 @@ router.put('/:id', authenticateToken, async (req, res, next) => {
 });
 
 // Delete user (Admin only)
-router.delete('/:id', authenticateToken, isAdmin, async (req, res, next) => {
+router.delete('/:id', authenticateToken, async (req, res, next) => {
     try {
         const userId = parseInt(req.params.id);
 

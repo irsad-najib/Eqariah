@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const z = require('zod');
 const authenticateToken = require('../middleware/auth');
-const isAdmin = require('../middleware/isAdmin');
 require('dotenv').config();
 
 
@@ -117,10 +116,9 @@ router.post('/login', async (req, res) => {
             { expiresIn: '24h' }
         );
 
-        res.cookie('authenticatedToken', token, {
+        res.cookie('authToken', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
             maxAge: 24 * 60 * 60 * 1000,
             path: '/'
         })
@@ -158,14 +156,18 @@ router.post('/login', async (req, res) => {
 
 router.get('/verify-session', authenticateToken, async (req, res) => {
     try {
+        if (!req.userId) {
+            return res.status(401).json({
+                authenticated: false,
+                error: 'User ID is missing or invalid'
+            });
+        }
         const user = await prisma.users.findUnique({
             where: { id: req.userId },
             select: {
-                id: true,
                 username: true,
                 email: true,
-                role: true,
-                // Tidak memilih password untuk keamanan
+                role: true
             }
         });
 
@@ -176,8 +178,10 @@ router.get('/verify-session', authenticateToken, async (req, res) => {
             });
         }
 
-        // Set header cache control untuk mencegah caching
-        res.setHeader('Cache-Control', 'no-store');
+        // Prevent caching of sensitive routes
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
 
         return res.status(200).json({
             authenticated: true,
@@ -193,17 +197,59 @@ router.get('/verify-session', authenticateToken, async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-    res.clearCookie('authenticateToken', {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
-        path: '/'
-    });
+    try {
+        res.clearCookie('authToken', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            path: '/'
+        });
 
-    return res.status(200).json({
-        success: true,
-        message: 'Logged out successfully'
-    });
+        res.json({
+            success: true,
+            message: 'Logout successful'
+        });
+    } catch (error) {
+        console.error('Logout Error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error during logout'
+        });
+    }
+});
+
+router.get('/check-auth', authenticateToken, async (req, res) => {
+    try {
+        if (!req.userId) {
+            return res.status(401).json({
+                isAuthenticated: false,
+                error: 'User ID is missing or invalid'
+            });
+        }
+
+        const user = await prisma.users.findUnique({
+            where: { id: req.userId },
+            select: {
+                username: true,
+                email: true,
+                role: true
+            }
+        });
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+
+        return res.status(200).json({
+            isAuthenticated: true,
+            user
+        });
+    } catch (error) {
+        console.error('Session verification error:', error);
+        return res.status(500).json({
+            isAuthenticated: false,
+            message: 'Internal server error during verification'
+        });
+    }
 });
 
 router.post('/registerMosque', async (req, res) => {
@@ -265,33 +311,36 @@ router.post('/registerMosque', async (req, res) => {
     }
 });
 
-router.post('/announcement', authenticateToken, isAdmin, async function (req, res, next) {
+router.post('/announcement', authenticateToken, async function (req, res, next) {
     try {
         const { title, detail, category_id } = req.body;
 
-        // Validasi input
         if (!title || !detail || !category_id) {
             return res.status(400).json({
                 success: false,
                 message: 'All fields are required'
             });
         }
+        let category = await prisma.category.findUnique({
+            where: { id: category_id }
+        });
 
-        // Validasi category_id (contoh: harus 'announcement' atau 'appeal')
-        if (!['announcement', 'appeal'].includes(category_id)) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid category'
+        if (!category) {
+            category = await prisma.category.create({
+                data: {
+                    id: category_id,
+                    name: category_id === 'announcement' ? 'Announcement' : 'Appeal'
+                }
             });
         }
 
         const announcement = await prisma.inbox.create({
             data: {
-                title,
+                title: title,
                 detail,
-                category_id,
-                created_at: new Date(), // perbaiki typo dari create_at
-                user_id: req.user.id
+                category_id: category.id,
+                create_at: new Date(),
+                user_id: req.userId
             }
         });
 
@@ -312,7 +361,7 @@ router.get('/announcements', authenticateToken, async (req, res) => {
                 category: true,
                 inbox_read: {
                     where: {
-                        users_id: req.user.id
+                        users_id: req.userId
                     }
                 }
             }
@@ -330,7 +379,7 @@ router.post('/announcement/read/:id', authenticateToken, async (req, res) => {
         await prisma.inbox_read.create({
             data: {
                 inbox_id: parseInt(id),
-                users_id: req.user.id,
+                users_id: req.userId,
                 is_read: true
             }
         });
@@ -338,6 +387,18 @@ router.post('/announcement/read/:id', authenticateToken, async (req, res) => {
         res.json({ message: "Announcement is marked as read" });
     } catch (err) {
         res.status(500).json({ message: err.message });
+    }
+});
+
+router.get('/role', async (req, res) => {
+    const { role } = req.query; // Ubah ke req.query
+    try {
+        const users = await prisma.users.findMany({
+            where: { role: role } // Filter berdasarkan role
+        });
+        res.status(200).json(users); // Kirim data users yang ditemukan
+    } catch (error) {
+        res.status(500).json({ message: error.message }); // Perbaiki error handling
     }
 });
 

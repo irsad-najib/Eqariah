@@ -32,13 +32,7 @@ export default function Login() {
                 if (response.data.authenticated) {
                     setIsLoggedIn(true);
 
-                    if (response.data.user.role === 'admin') {
-                        console.log("routing to admin dashboard");
-                        router.push("/adminDashboard")
-                    } else {
-                        console.log("routing to default page");
-                        router.push("/")
-                    }
+                    router.push('/')
                 }
             } catch (error) {
                 console.error("session verification failed", error);
@@ -63,7 +57,7 @@ export default function Login() {
             const response = await axios.post("http://localhost:3001/api/auth/login", formData, {
                 headers: {
                     "Content-Type": "application/json",
-                    "Accept": "application/json"
+                    "Accept": "application/json",
                 },
                 withCredentials: true,
                 timeout: 10000
@@ -72,11 +66,7 @@ export default function Login() {
             if (response.data.success) {
                 setIsLoggedIn(true);
 
-                if (response.data.user.role === 'admin') {
-                    router.push("../adminDashboard")
-                } else {
-                    router.replace("/")
-                }
+                router.push('/')
             } else {
                 setError("login failed: " + (response.data.message || "unknown error"))
             }

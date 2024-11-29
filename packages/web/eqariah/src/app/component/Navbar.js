@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
+// NavLink Component
 const NavLink = ({ href, children, className = "" }) => (
     <Link
         href={href}
@@ -11,15 +14,46 @@ const NavLink = ({ href, children, className = "" }) => (
     </Link>
 );
 
+// Navigation Links Configuration
 const navLinks = [
     { href: "/about", label: "About" },
-    { href: "../register_masjid", label: "Mosque Register" },
-    { href: "../announcement", label: "announcement" },
-    { href: "../userManagement", label: "UserManagement" },
+    { href: "/register_masjid", label: "Mosque Register" },
+    { href: "/announcement", label: "Announcement" },
+    { href: "/", label: "User Management" },
 ];
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
+    const router = useRouter();
+
+    // Check login status on component mount
+    useEffect(() => {
+        const checkLoginStatus = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/api/auth/check-auth', {
+                    withCredentials: true
+                });
+                setIsLogin(response.data.isAuthenticated);
+            } catch (error) {
+                setIsLogin(false);
+            }
+        };
+
+        checkLoginStatus();
+    }, []);
+
+    const handleLogout = async () => {
+        try {
+            await axios.post('http://localhost:3001/api/auth/logout', {}, {
+                withCredentials: true
+            });
+            setIsLogin(false);
+            router.push('/login'); // Redirect to login page after logout
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    };
 
     return (
         <nav className="bg-[#4caf4f] py-[3%] lg:py-4 sticky top-0 z-50">
@@ -44,12 +78,16 @@ export default function Navbar() {
 
                 {/* Mobile Menu Button */}
                 <button
-                    onClick={() => setIsOpen(!isOpen)} className="lg:hidden text-white focus:outline-none" aria-label="Toggle menu"
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="lg:hidden text-white focus:outline-none"
+                    aria-label="Toggle menu"
                 >
-                    <svg className="w-6 h-6 md:h-8 md:w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    >
+                    <svg className="w-6 h-6 md:h-8 md:w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
-                            strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
                         />
                     </svg>
                 </button>
@@ -58,32 +96,48 @@ export default function Navbar() {
                 <div className="hidden lg:flex items-center space-x-8">
                     <div className="flex space-x-6">
                         {navLinks.map(({ href, label }) => (
-                            <NavLink key={href} href={href} className="text-white text-lg">
+                            <NavLink
+                                key={href}
+                                href={href}
+                                className="text-white text-lg"
+                            >
                                 {label}
                             </NavLink>
                         ))}
                     </div>
 
-                    {/* Login Button */}
-                    <div className="flex items-center space-x-2 text-white">
-                        <Image
-                            src="/bx-user.svg"
-                            width={32}
-                            height={32}
-                            alt="User Icon"
-                            className="w-8 h-8"
-                        />
-                        <NavLink href="../login" className="text-xl font-medium">
-                            Login
-                        </NavLink>
-                    </div>
+                    {/* Login/Logout Button */}
+                    {isLogin ? (
+                        <div
+                            className="text-xl font-medium text-white cursor-pointer"
+                            onClick={handleLogout}
+                        >
+                            Logout
+                        </div>
+                    ) : (
+                        <div className="flex items-center space-x-2 text-white">
+                            <Image
+                                src="/bx-user.svg"
+                                width={32}
+                                height={32}
+                                alt="User Icon"
+                                className="w-8 h-8"
+                            />
+                            <NavLink
+                                href="/login"
+                                className="text-xl font-medium"
+                            >
+                                Login
+                            </NavLink>
+                        </div>
+                    )}
                 </div>
             </div>
 
             {/* Mobile Menu */}
             <div
-                className={`lg:hidden absolute w-full bg-[#4caf4f] transition-all duration-500 ease-in-out ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'} shadow-lg
-        `}
+                className={`lg:hidden absolute w-full bg-[#4caf4f] transition-all duration-500 ease-in-out 
+                    ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'} shadow-lg`}
             >
                 <div className="px-[4%] py-[4%] space-y-[3%]">
                     {navLinks.map(({ href, label }) => (
@@ -95,19 +149,32 @@ export default function Navbar() {
                             {label}
                         </NavLink>
                     ))}
-                    <div className="flex items-center space-x-[2%] pt-[5%] border-t border-white/20">
-                        <Image
-                            src="/bx-user.svg"
-                            width={32}
-                            height={32}
-                            alt="User Icon"
-                        />
-                        <NavLink href="/login" className="text-white text-[3.3vw] font-medium">
-                            Login
-                        </NavLink>
-                    </div>
+
+                    {isLogin ? (
+                        <div
+                            className="text-white text-[3.3vw] font-medium cursor-pointer"
+                            onClick={handleLogout}
+                        >
+                            Logout
+                        </div>
+                    ) : (
+                        <div className="flex items-center space-x-[2%] pt-[5%] border-t border-white/20">
+                            <Image
+                                src="/bx-user.svg"
+                                width={32}
+                                height={32}
+                                alt="User Icon"
+                            />
+                            <NavLink
+                                href="/login"
+                                className="text-white text-[3.3vw] font-medium"
+                            >
+                                Login
+                            </NavLink>
+                        </div>
+                    )}
                 </div>
             </div>
         </nav>
-    );
+    )
 }

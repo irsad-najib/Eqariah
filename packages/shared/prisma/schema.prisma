@@ -9,7 +9,7 @@ datasource db {
 
 model category {
   id    String  @id @db.VarChar(100)
-  name  String  @db.VarChar(100)
+  name  String  @db.VarChar(100) @unique
   inbox inbox[]
 }
 
@@ -33,8 +33,8 @@ model inbox_read {
   is_read  Boolean
   inbox_id Int
   users_id Int
-  inbox    inbox   @relation(fields: [inbox_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_inbox_read_inbox")
-  users    users   @relation(fields: [users_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fx_inbor_read_users")
+  inbox    inbox   @relation(fields: [inbox_id], references: [id])
+  users    users   @relation(fields: [users_id], references: [id])
 
   @@index([inbox_id], map: "fk_inbox_read_inbox")
   @@index([users_id], map: "fx_inbor_read_users")

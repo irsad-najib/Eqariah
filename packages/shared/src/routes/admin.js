@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const authenticateToken = require('../middleware/auth');
-const isAdmin = require('../middleware/isAdmin');
 const prisma = new PrismaClient();
 
-router.get('./users', authenticateToken, isAdmin, async (req, res) => {
+router.get('./users', authenticateToken, async (req, res) => {
     try {
         const users = await prisma.users.findMany({
             select: {
@@ -23,7 +22,7 @@ router.get('./users', authenticateToken, isAdmin, async (req, res) => {
     }
 });
 
-router.patch('/users/:id/role', authenticateToken, isAdmin, async (req, res) => {
+router.patch('/users/:id/role', authenticateToken, async (req, res) => {
     try {
         const { id } = req.params;
         const { role } = req.body;

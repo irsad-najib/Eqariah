@@ -1,6 +1,8 @@
 "use client"
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Navbar from "../component/Navbar";
+import Footer from "../component/Footer";
 
 export default function RegisterMosque() {
     const router = useRouter();
@@ -134,17 +136,24 @@ export default function RegisterMosque() {
     );
 
     return (
-        <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
+        <>
+        <Navbar/>
+        <div className="bg-gray-100 flex justify-center items-center flex-1 flex-col pt-10 pb-10">
+            <h1 className="text-[10vw] font-bold text-green-600 mb-[3%] md:text-[5vw] lg:text-4xl">
+             Eqariah
+            </h1>
+            <div className="pt-10 bg-white p-12 rounded-lg shadow-lg w-full max-w-md">
+                <h2 className="text-[7vw] font-bold mb-[4%] text-center md:text-[3vw] lg:text-2xl pb-5">Mosque Register</h2>
             {submitError && (
                 <div className="p-4 text-red-500 bg-red-100 border border-red-400 rounded">
                     {submitError}
                 </div>
             )}
 
-            <form onSubmit={handleSubmit} className="p-4 md:p-6 lg:p-8 space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
                 <InputField
                     name="mosqueName"
-                    placeholder="Input Mosque Name"
+                    placeholder="Mosque Name"
                     label="Mosque Name"
                 />
 
@@ -184,6 +193,20 @@ export default function RegisterMosque() {
                     label="Contact Person"
                 />
 
+                <div className="text-gray-600 text-xs mt-4">
+                    <p>
+                        Mosque who use our service may have uploaded mosque contact information to Eqariah.{" "}
+                        <a href="#" className="text-blue-500 underline">Learn more.</a>
+                    </p>
+                    <p className="mt-2">
+                        By clicking Sign Up, you agree to our{" "}
+                        <a href="#" className="text-blue-500 underline">Terms</a>,{" "}
+                        <a href="#" className="text-blue-500 underline">Privacy Policy</a> and{" "}
+                        <a href="#" className="text-blue-500 underline">Cookies Policy</a>.
+                    </p>
+                    <p className="mt-1">You may receive Email from us.</p>
+                </div>
+
                 <div className="flex justify-center">
                     <button
                         type="submit"
@@ -201,5 +224,8 @@ export default function RegisterMosque() {
                 </div>
             </form>
         </div>
+        </div>
+        <Footer />
+        </>
     );
 };

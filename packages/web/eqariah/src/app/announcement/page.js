@@ -2,6 +2,8 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Navbar from "../component/Navbar";
+import Footer from "../component/Footer";
 
 export default function AnnouncementDashboard() {
     const router = useRouter();
@@ -165,7 +167,7 @@ export default function AnnouncementDashboard() {
     }
 
     return (
-        <div className="container mx-auto p-4">
+        <><div className="container mx-auto p-4">
             {userRole === 'admin' && (
                 <div className="bg-white shadow-md rounded-lg mb-6 p-6">
                     <div className="flex justify-between items-center mb-4">
@@ -198,8 +200,7 @@ export default function AnnouncementDashboard() {
                                 value={newAnnouncement.title}
                                 onChange={(e) => setNewAnnouncement({ ...newAnnouncement, title: e.target.value })}
                                 required
-                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
                         </div>
                         <div>
                             <textarea
@@ -207,8 +208,7 @@ export default function AnnouncementDashboard() {
                                 value={newAnnouncement.detail}
                                 onChange={(e) => setNewAnnouncement({ ...newAnnouncement, detail: e.target.value })}
                                 required
-                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px]"
-                            />
+                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px]" />
                         </div>
                         <div>
                             <select
@@ -262,6 +262,6 @@ export default function AnnouncementDashboard() {
                     </div>
                 ))}
             </div>
-        </div>
+        </div><Footer /></>
     );
 }

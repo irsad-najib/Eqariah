@@ -3,6 +3,8 @@ import React, { useState } from "react"
 import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Navbar from "../component/Navbar";
+import Footer from "../component/Footer";
 
 export default function Register() {
     const router = useRouter();
@@ -125,8 +127,14 @@ export default function Register() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="bg-white p-[4%] lg:px-36 rounded-lg shadow-lg w-full mx-[3%] md:mx-[18%] lg:mx-[550px]">
+        <>
+        <Navbar />
+        <div className="bg-gray-100 flex justify-center items-center flex-1 flex-col pt-10 pb-10">
+            <h1 className="text-[10vw] font-bold text-green-600 mb-[3%] md:text-[5vw] lg:text-4xl">
+             Eqariah
+            </h1>
+            <div className="pt-10 bg-white p-12 rounded-lg shadow-lg w-full max-w-md">
+
                 <h2 className="text-[7vw] font-bold mb-[4%] text-center md:text-[3vw] lg:text-2xl">Register</h2>
 
                 {error && (
@@ -135,7 +143,7 @@ export default function Register() {
                     </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
                         <label className="block text-gray-700 text-[3.5vw] md:text-[2.5vw] lg:text-xl font-bold mb-[1%] lg:mb-1">
                             Username
@@ -221,13 +229,28 @@ export default function Register() {
                             </button>
                         </div>
                     </div>
+                    <div className="text-gray-600 text-xs mt-4">
+                        <p>
+                        People who use our service may have uploaded your contact information to Eqariah.{" "}
+                        <a href="#" className="text-blue-500 hover:underline">Learn more.</a>
+                        </p>
+                    <p className="mt-2">
+                        By clicking Sign Up, you agree to our{" "}
+                        <a href="#" className="text-blue-500 hover:underline">Terms</a>,{" "}
+                        <a href="#" className="text-blue-500 hover:underline">Privacy Policy</a> and{" "}
+                        <a href="#" className="text-blue-500 hover:underline">Cookies Policy</a>.
+                        </p>
+                    <p className="mt-1">
+                        You may receive Email from us.
+                    </p>
+                </div>
 
                     <button
                         type="submit"
                         disabled={loading}
                         className="bg-green-600 hover:bg-green-700 text-white font-bold py-[2%] lg:py-2 px-[4%] lg:px-4 rounded focus:outline-none focus:shadow-outline w-full disabled:opacity-50 text-[4vw] md:text-[3vw] lg:text-xl"
                     >
-                        {loading ? "Loading..." : "Register"}
+                        {loading ? "Loading..." : "Sign Up"}
                     </button>
                 </form>
 
@@ -237,5 +260,7 @@ export default function Register() {
                 </p>
             </div>
         </div>
+        <Footer />
+        </>
     );
 }

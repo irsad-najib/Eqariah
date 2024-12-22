@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { unknown } from "zod";
+import Navbar from "../component/Navbar";
+import Footer from "../component/footer";
 
 export default function Login() {
     const router = useRouter();
@@ -86,73 +87,101 @@ export default function Login() {
 
     // Sisanya sama dengan kode sebelumnya...
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="bg-white p-[4%] lg:px-36 rounded-lg shadow-lg w-full mx-[3%] md:mx-[18%] lg:mx-[550px]">
-                <h2 className="text-[7vw] font-bold mb-[4%] text-center md:text-[3vw] lg:text-2xl">Login</h2>
+        <>
+            <Navbar />
+            <div className="min-h-screen flex  flex-col md:flex-row lg:flex-row items-center bg-gray-100">
+                {/* Left Section */}
 
-                {error && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-[3%] lg:px-3 py-[3%] lg:py-3 rounded mb-[3%] lg:mb-3">
-                        {error}
-                    </div>
-                )}
+                <div className="flex-1 flex flex-col justify-center p-[6%] lg:p-38">
+                    <h1 className="text-green-600 text-[10vw] md:text-[7vw] lg:text-7xl font-bold">Eqariah</h1>
+                    <p className="text-gray-700 text-[4vw] md:text-[3vw] lg:text-xl mt-4">
+                        Eqariah helps you connect and share with all moslems in the world.
+                    </p>
+                </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Form input sama seperti sebelumnya */}
-                    <div>
-                        <label className="block text-gray-700 text-[3.5vw] md:text-[2.5vw] lg:text-xl font-bold mb-[1%] lg:mb-1">
-                            Email or Username
-                        </label>
-                        <input
-                            type="text"
-                            name="identifier"
-                            value={formData.identifier}
-                            onChange={handleChange}
-                            className="shadow appearance-none border rounded w-full py-[2%] lg:py-2 px-[3%] lg:px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="Enter Email or Username"
-                            required
-                        />
-                    </div>
+                {/* Right Section (Login Box) */}
+                <div className="flex justify-center items-center flex-1 p-[6%] lg:p-38">
+                    <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+                        <h2 className="text-2xl font-bold mb-6 text-center">Log in</h2>
 
-                    <div>
-                        <label className="block text-gray-700 text-[3.5vw] md:text-[2.5vw] lg:text-xl font-bold mb-[1%] lg:mb-1">
-                            Password
-                        </label>
-                        <div className="relative">
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                name="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                className="shadow appearance-none border rounded w-full py-[2%] lg:py-2 px-[3%] lg:px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                placeholder="Enter password"
-                                required
-                            />
+                        {error && (
+                            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                                {error}
+                            </div>
+                        )}
+
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <div>
+                                <label className="block text-gray-700 font-bold mb-2">
+                                    Email or Username
+                                </label>
+                                <input
+                                    type="text"
+                                    name="identifier"
+                                    value={formData.identifier}
+                                    onChange={handleChange}
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    placeholder="Enter Email or Username"
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-gray-700 font-bold mb-2">
+                                    Password
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        placeholder="Enter password"
+                                        required
+                                    />
+                                    <button
+                                        type="button"
+                                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
+                                        onMouseDown={handleMouseDown}
+                                        onMouseUp={handleMouseUp}
+                                        onMouseLeave={handleMouseUp}
+                                    >
+                                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                    </button>
+                                </div>
+                            </div>
+
                             <button
-                                type="button"
-                                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
-                                onMouseDown={handleMouseDown}
-                                onMouseUp={handleMouseUp}
-                                onMouseLeave={handleMouseUp}
+                                type="submit"
+                                disabled={loading}
+                                className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full disabled:opacity-50"
                             >
-                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                {loading ? "Loading..." : "Log in"}
                             </button>
+                        </form>
+
+                        <p className="mt-6 text-center">
+                            <a
+                                href="#"
+                                className="text-green-500 hover:text-green-700 text-sm"
+                            >
+                                Forgotten password?
+                            </a>
+                        </p>
+
+                        <div className="text-center mt-6">
+                            <a
+                                href="../register"
+                                className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                            >
+                                Create new account
+                            </a>
                         </div>
                     </div>
-
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="bg-green-600 hover:bg-green-700 text-white font-bold py-[2%] lg:py-2 px-[4%] lg:px-4 rounded focus:outline-none focus:shadow-outline w-full disabled:opacity-50 text-[4vw] md:text-[3vw] lg:text-xl"
-                    >
-                        {loading ? "Loading..." : "Login"}
-                    </button>
-                </form>
-
-                <p className="mt-[6%] text-center text-[3vw] md:text-[2vw] lg:text-lg lg:mt-6">
-                    Don't have an account?{" "}
-                    <a href="../register" className="text-blue-500 hover:text-blue-700">Register here</a>
-                </p>
+                </div>
             </div>
-        </div>
+            <Footer />
+        </>
     );
 }

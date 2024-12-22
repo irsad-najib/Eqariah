@@ -27,7 +27,6 @@ export default function Navbar() {
     const [isLogin, setIsLogin] = useState(false);
     const router = useRouter();
 
-    // Check login status on component mount
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
@@ -61,16 +60,16 @@ export default function Navbar() {
                 {/* Logo Section */}
                 <div className="flex items-center">
                     <Image
-                        src="/next.svg"
-                        width={50}
-                        height={50}
+                        src="/eqariah.svg"
+                        width={20}
+                        height={20}
                         alt="Eqariah logo"
-                        className="w-[14%] h-[12%] md:w-[20%] md:h-[20%] object-contain"
+                        className="w-[30px] h-[30px] object-contain scale-150"
                         priority
                     />
                     <NavLink
                         href="/"
-                        className="ml-[2%] text-white text-[4vw] md:text-[4.8vw] lg:text-2xl font-bold"
+                        className="ml-[10%] text-white text-[4vw] md:text-[4.8vw] lg:text-2xl font-bold"
                     >
                         Eqariah
                     </NavLink>

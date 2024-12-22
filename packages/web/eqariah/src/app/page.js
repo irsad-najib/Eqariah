@@ -11,6 +11,7 @@ import gsap from 'gsap';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import Footer from './component/footer';
 
 export default function Home() {
     useEffect(() => {
@@ -299,47 +300,7 @@ export default function Home() {
                     <button onClick={handleButtonClick} className="py-[6%] px-[8%] md:py-[3%] md:px-[4%] lg:py-6 lg:px-10 bg-[#4CAF4F] text-[4.3vw] md:text-[3.8vw] lg:text-2xl mt-2 rounded-md text-white ">Get a Demo →</button>
                 </div>
             </section>
-
-            <footer className='bg-black flex flex-col-reverse lg:flex-row text-white p-[10%] justify-center lg:justify-around'>
-                <div className='flex flex-col'>
-                    <div className='flex flex-row gap-4 items-center justify-center p-[4%] lg:p-4'>
-                        <Image src='/dribble.svg' alt='logo' width={100} height={100} />
-                        <h1 className='text-[8vw] lg:text-3xl font-bold'>Eqariah</h1>
-                    </div>
-                    <a>Copyright @ 2024 Irsad Gamma</a>
-                    <a className='py-[4%] lg:py-4'>All right reserved</a>
-                    <ul className='flex gap-5'>
-                        <Image src='/instagram.svg' alt='instagram' width={40} height={40} className=' bg-gray-700 lg: p-1 rounded-full' />
-                        <Image src='/dribble.svg' alt='dribble' width={40} height={40} className=' bg-gray-700 lg: p-1 rounded-full' />
-                        <Image src='/X.svg' alt='X' width={40} height={40} className=' bg-gray-700 lg: p-1 rounded-full' />
-                        <Image src='/youtube.svg' alt='youtube' width={40} height={40} className=' bg-gray-700 lg: p-1 rounded-full' />
-                    </ul>
-                </div>
-
-                <div className='flex flex-col justify-center lg:ml-72'>
-                    <h1 className='py-[4%] font-bold text-[4vw] lg:text-2xl md:text-[3.8vw]'>Company</h1>
-                    <a className='text-gray-300 text-[3.5vw] md:text-[2. md:text-[2vw] lg:text-xl'>About us</a>
-                    <a className='text-gray-300 text-[3.5vw] md:text-[2. md:text-[2vw] lg:text-xl'>Blog</a>
-                    <a className='text-gray-300 text-[3.5vw] md:text-[2. md:text-[2vw] lg:text-xl'>Contacts us</a>
-                    <a className='text-gray-300 text-[3.5vw] md:text-[2. md:text-[2vw] lg:text-xl'>Pricing</a>
-                    <a className='text-gray-300 text-[3.5vw] md:text-[2. md:text-[2vw] lg:text-xl'>Testimonials</a>
-                </div>
-
-                <div className='flex flex-col justify-center'>
-                    <h1 className='font-bold py-[4%] text-[4vw] lg:text-2xl md:text-[3.8vw]'>Support</h1>
-                    <a className='text-gray-300 text-[3.5vw] md:text-[2. md:text-[2vw] lg:text-xl'>Help center</a>
-                    <a className='text-gray-300 text-[3.5vw] md:text-[2. md:text-[2vw] lg:text-xl'>Term and services</a>
-                    <a className='text-gray-300 text-[3.5vw] md:text-[2. md:text-[2vw] lg:text-xl'>Legal</a>
-                    <a className='text-gray-300 text-[3.5vw] md:text-[2. md:text-[2vw] lg:text-xl'>Pribacy policy</a>
-                    <a className='text-gray-300 text-[3.5vw] md:text-[2. md:text-[2vw] lg:text-xl'>Status</a>
-                </div>
-
-                <div className='flex flex-col justify-center'>
-                    <h1 className='text-[4.3vw] lg:text-2xl md:text-[4vw] font-bold pb-[4%]'>Stay up to date</h1>
-                    <input name='email' placeholder='Your email adress' className='bg-gray-500 -top-5 placeholder-slate-200 rounded py-[2%] px-[4%]' />
-                    <Image src='/send.svg' alt='send' width={30} height={30} className='flex absolute ml-[70%] mt-[10%] dark:invert lg:ml-[180px] lg:mt-10' />
-                </div>
-            </footer>
+            <Footer />
         </main >
     );
 }

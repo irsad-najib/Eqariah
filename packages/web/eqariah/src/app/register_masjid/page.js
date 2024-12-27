@@ -92,7 +92,7 @@ export default function RegisterMosque() {
 
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:3001/api/auth/registerMosque', {
+            const response = await fetch('https://13.239.232.246/api/auth/registerMosque', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

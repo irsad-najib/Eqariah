@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-// NavLink Component
 const NavLink = ({ href, children, className = "" }) => (
     <Link
         href={href}
@@ -14,7 +13,6 @@ const NavLink = ({ href, children, className = "" }) => (
     </Link>
 );
 
-// Navigation Links Configuration
 const navLinks = [
     { href: "/about", label: "About" },
     { href: "/register_masjid", label: "Mosque Register" },
@@ -30,34 +28,58 @@ export default function Navbar() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/api/auth/check-auth', {
-                    withCredentials: true
+                const response = await axios.get('https://13.239.232.246/api/auth/verify-session', {
+                    withCredentials: true,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
                 });
-                setIsLogin(response.data.isAuthenticated);
+
+                if (response.data && response.data.user) {
+                    setIsLogin(true);
+                } else {
+                    setIsLogin(false);
+                }
             } catch (error) {
+                console.error('Verification error:', error);
                 setIsLogin(false);
             }
         };
 
         checkLoginStatus();
+        const intervalId = setInterval(checkLoginStatus, 5 * 60 * 1000);
+        return () => clearInterval(intervalId);
     }, []);
+
+    useEffect(() => {
+        console.log('Status login diperbarui:', isLogin);
+    }, [isLogin]);
 
     const handleLogout = async () => {
         try {
-            await axios.post('http://localhost:3001/api/auth/logout', {}, {
-                withCredentials: true
+            await axios.post('https://13.239.232.246/api/auth/logout', {}, {
+                withCredentials: true,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
             });
+
+            console.log('Status sebelum diperbarui:', isLogin);
             setIsLogin(false);
-            router.push('/login'); // Redirect to login page after logout
+            console.log('State sedang diperbarui, kemungkinan belum langsung berubah:', isLogin);
+
+            await router.push('/login');
         } catch (error) {
-            console.error('Logout error:', error);
+            console.error('Terjadi kesalahan saat logout:', error);
+            alert('Logout gagal, silakan coba lagi.');
         }
     };
 
     return (
         <nav className="bg-[#4caf4f] py-[3%] lg:py-4 sticky top-0 z-50">
             <div className="container mx-auto flex justify-between items-center px-[4%]">
-                {/* Logo Section */}
                 <div className="flex items-center">
                     <Image
                         src="/eqariah.svg"
@@ -75,7 +97,6 @@ export default function Navbar() {
                     </NavLink>
                 </div>
 
-                {/* Mobile Menu Button */}
                 <button
                     onClick={() => setIsOpen(!isOpen)}
                     className="lg:hidden text-white focus:outline-none"
@@ -91,7 +112,6 @@ export default function Navbar() {
                     </svg>
                 </button>
 
-                {/* Desktop Navigation */}
                 <div className="hidden lg:flex items-center space-x-8">
                     <div className="flex space-x-6">
                         {navLinks.map(({ href, label }) => (
@@ -105,7 +125,6 @@ export default function Navbar() {
                         ))}
                     </div>
 
-                    {/* Login/Logout Button */}
                     {isLogin ? (
                         <div
                             className="text-xl font-medium text-white cursor-pointer"
@@ -133,7 +152,6 @@ export default function Navbar() {
                 </div>
             </div>
 
-            {/* Mobile Menu */}
             <div
                 className={`lg:hidden absolute w-full bg-[#4caf4f] transition-all duration-500 ease-in-out 
                     ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'} shadow-lg`}
@@ -175,5 +193,5 @@ export default function Navbar() {
                 </div>
             </div>
         </nav>
-    )
+    );
 }

@@ -4,11 +4,11 @@
     "\\packages",
     "\\packages\\mobile",
     "\\packages\\shared",
+    "\\packages\\shared\\src",
     "\\packages\\web",
     "\\packages\\web\\eqariah",
     "\\packages\\web\\eqariah\\src",
     "\\packages\\web\\eqariah\\src\\app"
   ],
-  "SelectedNode": "\\packages\\web\\eqariah\\src\\app\\page.js",
   "PreviewInSolutionExplorer": false
 }

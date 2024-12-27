@@ -1,0 +1,26 @@
+Resources:
+  AWSEBAutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AutoScalingGroupName: ${AWS::StackName}-ASG
+      MinSize: "1"
+      MaxSize: "4"
+      DesiredCapacity: "2"
+      LaunchTemplate:
+        LaunchTemplateName: LaunchTemplate
+        Version: LaunchTemplate.LatestVersionNumber
+  LaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: ${AWS::StackName}-LT
+      LaunchTemplateData:
+        InstanceType: t2.micro
+        ImageId: AWSEBAutoScalingLaunchTemplateAMI
+        SecurityGroupIds:
+          - AWSEBSecurityGroup
+        UserData:
+          Fn::Base64: |
+            #!/bin/bash
+            cd /var/app/current
+            npm install
+            npm start

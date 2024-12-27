@@ -118,12 +118,12 @@ router.post('/login', async (req, res) => {
 
         res.cookie('authToken', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: true,  // Karena menggunakan HTTPS (x-forwarded-proto: 'https')
+            sameSite: 'none',
             maxAge: 24 * 60 * 60 * 1000,
-            path: '/'
-        })
+            path: '/',
 
-
+        });
         // Logging untuk debugging
         console.log('Login Success:', {
             userId: user.id,
@@ -149,21 +149,22 @@ router.post('/login', async (req, res) => {
 
         res.status(500).json({
             error: 'Internal server error during login',
-            details: process.env.NODE_ENV === 'development' ? error.message : null
         });
     }
 });
 
 router.get('/verify-session', authenticateToken, async (req, res) => {
     try {
-        if (!req.userId) {
+
+        if (!req.user?.userId) {  // Ubah req.userId menjadi req.user.userId
             return res.status(401).json({
                 authenticated: false,
                 error: 'User ID is missing or invalid'
             });
         }
+
         const user = await prisma.users.findUnique({
-            where: { id: req.userId },
+            where: { id: req.user.userId },  // Ubah req.userId menjadi req.user.userId
             select: {
                 username: true,
                 email: true,
@@ -198,12 +199,15 @@ router.get('/verify-session', authenticateToken, async (req, res) => {
 
 router.post('/logout', (req, res) => {
     try {
+        console.log("p");
+
         res.clearCookie('authToken', {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: true,
+            sameSite: 'none',
             path: '/'
         });
+        console.log("logout success")
 
         res.json({
             success: true,
@@ -238,6 +242,9 @@ router.get('/check-auth', authenticateToken, async (req, res) => {
         res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
         res.setHeader('Pragma', 'no-cache');
         res.setHeader('Expires', '0');
+        res.setHeader('X-Content-Type-Options', 'nosniff');
+        res.setHeader('X-Frame-Options', 'DENY');
+        res.setHeader('X-XSS-Protection', '1; mode=block');
 
         return res.status(200).json({
             isAuthenticated: true,

@@ -28,7 +28,7 @@ export default function AnnouncementDashboard() {
     useEffect(() => {
         const verifySession = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/api/auth/verify-session', {
+                const response = await axios.get('https://13.239.232.246/api/auth/verify-session', {
                     withCredentials: true
                 });
 
@@ -46,7 +46,7 @@ export default function AnnouncementDashboard() {
 
         const fetchAnnouncements = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/api/auth/announcements', {
+                const response = await axios.get('https://13.239.232.246/api/auth/announcements', {
                     withCredentials: true
                 });
                 setAnnouncements(response.data);
@@ -90,7 +90,7 @@ export default function AnnouncementDashboard() {
 
         try {
             const response = await axios.post(
-                'http://localhost:3001/api/auth/announcement',
+                'https://13.239.232.246/api/auth/announcement',
                 newAnnouncement,
                 {
                     withCredentials: true,
@@ -109,7 +109,7 @@ export default function AnnouncementDashboard() {
                 });
 
                 // Refresh announcements
-                const updatedResponse = await axios.get('http://localhost:3001/api/announcements', {
+                const updatedResponse = await axios.get('https://13.239.232.246/api/announcements', {
                     withCredentials: true
                 });
                 setAnnouncements(updatedResponse.data);
@@ -132,10 +132,10 @@ export default function AnnouncementDashboard() {
 
     const markAsRead = async (id) => {
         try {
-            await axios.post(`http://localhost:3001/api/auth/announcement/read/${id}`, {}, {
+            await axios.post(`https://13.239.232.246/api/auth/announcement/read/${id}`, {}, {
                 withCredentials: true
             });
-            const response = await axios.get('http://localhost:3001/api/auth/announcements', {
+            const response = await axios.get('https://13.239.232.246/api/auth/announcements', {
                 withCredentials: true
             });
             setAnnouncements(response.data);
@@ -146,7 +146,7 @@ export default function AnnouncementDashboard() {
 
     const handleLogout = async () => {
         try {
-            await axios.post('http://localhost:3001/api/auth/logout', {}, {
+            await axios.post('https://13.239.232.246/api/auth/logout', {}, {
                 withCredentials: true
             });
             router.replace('/login');

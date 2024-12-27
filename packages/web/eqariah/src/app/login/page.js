@@ -26,7 +26,7 @@ export default function Login() {
     useEffect(() => {
         const chekAuthStatus = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/api/auth/verify-session', {
+                const response = await axios.get('https://13.239.232.246/api/auth/verify-session', {
                     withCredentials: true
                 });
 
@@ -55,7 +55,7 @@ export default function Login() {
         }
 
         try {
-            const response = await axios.post("http://localhost:3001/api/auth/login", formData, {
+            const response = await axios.post("https://13.239.232.246/api/auth/login", formData, {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
@@ -63,9 +63,15 @@ export default function Login() {
                 withCredentials: true,
                 timeout: 10000
             });
+            console.log('Response headers:', response.headers);
+            console.log('Response cookies:', response.headers['set-cookie']);
+            document.cookie.split(';').forEach(cookie => {
+                console.log('Cookie:', cookie.trim());
+            });
 
             if (response.data.success) {
                 setIsLoggedIn(true);
+                console.log("p" + document.cookie)
 
                 router.push('/')
             } else {

@@ -85,7 +85,7 @@ export default function Register() {
         }
 
         try {
-            const response = await axios.post('http://localhost:3001/api/auth/register', {
+            const response = await axios.post('https://13.239.232.246/api/auth/register', {
                 username: formData.username,
                 email: formData.email,
                 password: formData.password
@@ -96,27 +96,15 @@ export default function Register() {
             });
 
             if (response.data) {
-                // Optional: Auto login after registration
                 router.push("/login");
             }
         } catch (error) {
             if (error.response) {
-                const errorMessage = error.response.data.error || 'Registration failed';
-                switch (error.response.status) {
-                    case 400:
-                        setError(errorMessage); // Will show specific validation errors from backend
-                        break;
-                    case 409:
-                        setError('Username or email already exists');
-                        break;
-                    case 500:
-                        setError('Server error. Please try again later');
-                        break;
-                    default:
-                        setError(errorMessage);
-                }
+                // Tangani response error dari server
+                setError(error.response.data.error || 'Registration failed');
             } else if (error.request) {
-                setError('Unable to connect to server. Please check your internet connection');
+                // Tangani error network/koneksi
+                setError('Connection error. Please try again');
             } else {
                 setError('An error occurred. Please try again');
             }

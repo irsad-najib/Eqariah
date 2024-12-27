@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Footer from "../component/footer";
 import Navbar from "../component/Navbar";
+import axios from "axios";
 
 export default function RegisterMosque() {
     const router = useRouter();
@@ -92,8 +93,7 @@ export default function RegisterMosque() {
 
         setLoading(true);
         try {
-            const response = await fetch('https://ec2-13-239-232-246.ap-southeast-2.compute.amazonaws.com/api/auth/registerMosque', {
-                method: 'POST',
+            const response = await axios.post('https://ec2-13-239-232-246.ap-southeast-2.compute.amazonaws.com/api/auth/registerMosque', {
                 headers: {
                     'Content-Type': 'application/json',
                 },

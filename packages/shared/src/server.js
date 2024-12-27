@@ -12,18 +12,24 @@ const app = express();
 const prisma = new PrismaClient();
 const PORT = process.env.PORT;
 const corsOptions = {
-    origin: process.env.FRONTEND_URL,
+    origin: ['https://eqariah.vercel.app', process.env.FRONTEND_URL],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Set-Cookie'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Set-Cookie', 'Access-Control-Allow-Headers'],
+    exposedHeaders: ['Set-Cookie'],
     credentials: true,
     optionsSuccessStatus: 200
-};
+}
 console.log(process.env.FRONTEND_URL)
 
 app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+});
 
 app.get('/healt', (req, res) => {
     res.json({ status: 'OK', timestamp: new Date() });

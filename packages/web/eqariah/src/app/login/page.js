@@ -26,7 +26,7 @@ export default function Login() {
     useEffect(() => {
         const chekAuthStatus = async () => {
             try {
-                const response = await axios.get('https://13.239.232.246/api/auth/verify-session', {
+                const response = await axios.get('https://ec2-13-239-232-246.ap-southeast-2.compute.amazonaws.com/api/auth/verify-session', {
                     withCredentials: true
                 });
 
@@ -55,7 +55,7 @@ export default function Login() {
         }
 
         try {
-            const response = await axios.post("https://13.239.232.246/api/auth/login", formData, {
+            const response = await axios.post("https://ec2-13-239-232-246.ap-southeast-2.compute.amazonaws.com/api/auth/login", formData, {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",

@@ -28,7 +28,7 @@ export default function Navbar() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const response = await axios.get('https://13.239.232.246/api/auth/verify-session', {
+                const response = await axios.get('https://ec2-13-239-232-246.ap-southeast-2.compute.amazonaws.com/api/auth/verify-session', {
                     withCredentials: true,
                     headers: {
                         'Accept': 'application/json',
@@ -58,7 +58,7 @@ export default function Navbar() {
 
     const handleLogout = async () => {
         try {
-            await axios.post('https://13.239.232.246/api/auth/logout', {}, {
+            await axios.post('https://ec2-13-239-232-246.ap-southeast-2.compute.amazonaws.com/api/auth/logout', {}, {
                 withCredentials: true,
                 headers: {
                     'Accept': 'application/json',

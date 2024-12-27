@@ -95,18 +95,21 @@ export default function RegisterMosque() {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    withCredentials: true
                 }
             );
 
-            const data = response.data;
-
-            if (response.status !== 200) {
-                throw new Error(data.error || "Registration failed");
+            // Jika status bukan 201, anggap gagal
+            if (response.status !== 201) {
+                throw new Error("Failed to register mosque");
             }
 
+            const data = response.data;
+
             if (data.success) {
-                router.push("/");
+                console.log("Registration successful:", data);
+                router.push("/"); // Arahkan ke halaman utama
+            } else {
+                throw new Error(data.error || "Unexpected error occurred");
             }
         } catch (err) {
             setSubmitError(err.message || "An unexpected error occurred");
@@ -114,6 +117,7 @@ export default function RegisterMosque() {
             setLoading(false);
         }
     };
+
 
     const InputField = ({ name, type = "text", placeholder, label }) => (
         <div>

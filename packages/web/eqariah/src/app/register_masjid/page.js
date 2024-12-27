@@ -65,15 +65,15 @@ export default function RegisterMosque() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
         }));
 
         if (errors[name]) {
-            setErrors((prev) => ({
-                ...prev,
-                [name]: "",
+            setErrors(prevState => ({
+                ...prevState,
+                [name]: ""
             }));
         }
     };
@@ -98,7 +98,6 @@ export default function RegisterMosque() {
                 }
             );
 
-            // Jika status bukan 201, anggap gagal
             if (response.status !== 201) {
                 throw new Error("Failed to register mosque");
             }
@@ -107,7 +106,7 @@ export default function RegisterMosque() {
 
             if (data.success) {
                 console.log("Registration successful:", data);
-                router.push("/"); // Arahkan ke halaman utama
+                router.push("/");
             } else {
                 throw new Error(data.error || "Unexpected error occurred");
             }
@@ -117,7 +116,6 @@ export default function RegisterMosque() {
             setLoading(false);
         }
     };
-
 
     const InputField = ({ name, type = "text", placeholder, label }) => (
         <div>
@@ -131,6 +129,7 @@ export default function RegisterMosque() {
                 onChange={handleChange}
                 className="shadow appearance-none border rounded w-full py-[2%] px-[3%] text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder={placeholder}
+                autoComplete="off"
             />
             {errors[name] && (
                 <p className="text-red-500 text-sm mt-1">{errors[name]}</p>
@@ -146,7 +145,9 @@ export default function RegisterMosque() {
                     Eqariah
                 </h1>
                 <div className="pt-10 bg-white p-12 rounded-lg shadow-lg w-full max-w-md">
-                    <h2 className="text-[7vw] font-bold mb-[4%] text-center md:text-[3vw] lg:text-2xl pb-5">Mosque Register</h2>
+                    <h2 className="text-[7vw] font-bold mb-[4%] text-center md:text-[3vw] lg:text-2xl pb-5">
+                        Mosque Register
+                    </h2>
                     {submitError && (
                         <div className="p-4 text-red-500 bg-red-100 border border-red-400 rounded">
                             {submitError}
@@ -164,16 +165,40 @@ export default function RegisterMosque() {
                             <label className="block text-gray-700 text-responsive font-bold mb-[1%] lg:mb-1">
                                 Address
                             </label>
-                            <InputField name="street" placeholder="Street" />
+                            <InputField
+                                name="street"
+                                placeholder="Street"
+                            />
                             <div className="grid grid-cols-2 gap-2">
-                                <InputField name="rt" placeholder="RT" />
-                                <InputField name="rw" placeholder="RW" />
+                                <InputField
+                                    name="rt"
+                                    placeholder="RT"
+                                />
+                                <InputField
+                                    name="rw"
+                                    placeholder="RW"
+                                />
                             </div>
-                            <InputField name="village" placeholder="Village" />
-                            <InputField name="district" placeholder="District" />
-                            <InputField name="city" placeholder="City" />
-                            <InputField name="province" placeholder="Province" />
-                            <InputField name="postalCode" placeholder="Postal Code" />
+                            <InputField
+                                name="village"
+                                placeholder="Village"
+                            />
+                            <InputField
+                                name="district"
+                                placeholder="District"
+                            />
+                            <InputField
+                                name="city"
+                                placeholder="City"
+                            />
+                            <InputField
+                                name="province"
+                                placeholder="Province"
+                            />
+                            <InputField
+                                name="postalCode"
+                                placeholder="Postal Code"
+                            />
                         </div>
 
                         <InputField
@@ -198,14 +223,25 @@ export default function RegisterMosque() {
 
                         <div className="text-gray-600 text-xs mt-4">
                             <p>
-                                Mosque who use our service may have uploaded mosque contact information to Eqariah. {" "}
-                                <a href="#" className="text-blue-500 underline">Learn more.</a>
+                                Mosque who use our service may have uploaded mosque contact information to Eqariah.{" "}
+                                <a href="#" className="text-blue-500 underline">
+                                    Learn more.
+                                </a>
                             </p>
                             <p className="mt-2">
-                                By clicking Sign Up, you agree to our {" "}
-                                <a href="#" className="text-blue-500 underline">Terms</a>, {" "}
-                                <a href="#" className="text-blue-500 underline">Privacy Policy</a> and {" "}
-                                <a href="#" className="text-blue-500 underline">Cookies Policy</a>.
+                                By clicking Sign Up, you agree to our{" "}
+                                <a href="#" className="text-blue-500 underline">
+                                    Terms
+                                </a>
+                                ,{" "}
+                                <a href="#" className="text-blue-500 underline">
+                                    Privacy Policy
+                                </a>{" "}
+                                and{" "}
+                                <a href="#" className="text-blue-500 underline">
+                                    Cookies Policy
+                                </a>
+                                .
                             </p>
                             <p className="mt-1">You may receive Email from us.</p>
                         </div>

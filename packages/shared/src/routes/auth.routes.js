@@ -262,62 +262,70 @@ router.get('/check-auth', authenticateToken, async (req, res) => {
 router.post('/registerMosque', async (req, res) => {
     try {
         const data = await registerSchema.parseAsync(req.body);
-        const mosque = await prisma.registerMosque.create({
+        console.log("Received data:", data);
+
+        // Buat masjid terlebih dahulu
+        const mosque = await prisma.registermosque.create({
             data: {
                 mosqueName: data.mosqueName,
-                address: {
-                    create: {
-                        street: data.street,
-                        rt: data.rt,
-                        rw: data.rw,
-                        village: data.village,
-                        district: data.district,
-                        city: data.city,
-                        province: data.province,
-                        postalCode: data.postalCode
-                    }
-                },
                 phoneNumber: data.phoneNumber,
                 mosqueAdmin: data.mosqueAdmin,
-                contactPerson: data.contactPerson
+                contactPerson: data.contactPerson,
             },
-            include: {
-                address: true
-            }
         });
 
+        console.log("Mosque created:", mosque);
+
+        // Buat alamat yang terhubung dengan masjid
+        const address = await prisma.address.create({
+            data: {
+                street: data.street,
+                rt: data.rt,
+                rw: data.rw,
+                village: data.village,
+                district: data.district,
+                city: data.city,
+                province: data.province,
+                postalCode: data.postalCode,
+                mosqueId: mosque.id, // Hubungkan ke masjid
+            },
+        });
+
+        console.log("Address created:", address);
+
+        // Sertakan data masjid dan alamat dalam respons
         return res.status(201).json({
             success: true,
-            data: mosque
+            data: {
+                ...mosque,
+                address,
+            },
         });
-
     } catch (error) {
-        console.error('Register error:', error);
+        console.error("Register error:", error);
 
-        // Handle different types of errors
         if (error instanceof z.ZodError) {
             return res.status(400).json({
                 success: false,
-                error: 'Validation failed',
-                details: error.errors
+                error: "Validation failed",
+                details: error.errors,
             });
         }
 
-        if (error.code === 'P2002') {
+        if (error.code === "P2002") {
             return res.status(409).json({
                 success: false,
-                error: 'Mosque with this name already exists'
+                error: "Mosque with this name already exists",
             });
         }
 
         return res.status(500).json({
             success: false,
-            error: 'Registration failed',
-            message: 'An error occurred while processing your request'
+            error: "Registration failed",
+            message: "An error occurred while processing your request",
         });
     }
 });
-
 router.post('/announcement', authenticateToken, async function (req, res, next) {
     try {
         const { title, detail, category_id } = req.body;

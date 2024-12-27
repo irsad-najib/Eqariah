@@ -95,6 +95,7 @@ export default function RegisterMosque() {
                     headers: {
                         "Content-Type": "application/json",
                     },
+                    withCredentials: true
                 }
             );
 

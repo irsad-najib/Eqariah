@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Footer from "../component/footer";
@@ -19,7 +20,7 @@ export default function RegisterMosque() {
         postalCode: "",
         phoneNumber: "",
         mosqueAdmin: "",
-        contactPerson: ""
+        contactPerson: "",
     });
 
     const [errors, setErrors] = useState({});
@@ -29,36 +30,30 @@ export default function RegisterMosque() {
     const validateForm = () => {
         const newErrors = {};
 
-        // Mosque Name validation
         if (!formData.mosqueName.trim()) {
             newErrors.mosqueName = "Mosque name is required";
         }
 
-        // Phone Number validation
         const phoneRegex = /^[0-9]{10,13}$/;
         if (!phoneRegex.test(formData.phoneNumber)) {
             newErrors.phoneNumber = "Please enter a valid phone number (10-13 digits)";
         }
 
-        // Address validation
         if (!formData.street.trim()) newErrors.street = "Street is required";
         if (!formData.village.trim()) newErrors.village = "Village is required";
         if (!formData.district.trim()) newErrors.district = "District is required";
         if (!formData.city.trim()) newErrors.city = "City is required";
         if (!formData.province.trim()) newErrors.province = "Province is required";
 
-        // Postal Code validation
         const postalRegex = /^[0-9]{5}$/;
         if (!postalRegex.test(formData.postalCode)) {
             newErrors.postalCode = "Please enter a valid 5-digit postal code";
         }
 
-        // Admin validation
         if (!formData.mosqueAdmin.trim()) {
             newErrors.mosqueAdmin = "Administrator name is required";
         }
 
-        // Contact Person validation
         const contactRegex = /^[0-9]{10,13}$/;
         if (!contactRegex.test(formData.contactPerson)) {
             newErrors.contactPerson = "Please enter a valid contact number (10-13 digits)";
@@ -70,15 +65,15 @@ export default function RegisterMosque() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
-            [name]: value
+            [name]: value,
         }));
-        // Clear error for this field when user starts typing
+
         if (errors[name]) {
-            setErrors(prev => ({
+            setErrors((prev) => ({
                 ...prev,
-                [name]: ""
+                [name]: "",
             }));
         }
     };
@@ -93,24 +88,27 @@ export default function RegisterMosque() {
 
         setLoading(true);
         try {
-            const response = await axios.post('https://ec2-13-239-232-246.ap-southeast-2.compute.amazonaws.com/api/auth/registerMosque', {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
+            const response = await axios.post(
+                "https://ec2-13-239-232-246.ap-southeast-2.compute.amazonaws.com/api/auth/registerMosque",
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
 
-            const data = await response.json();
+            const data = response.data;
 
-            if (!response.ok) {
-                throw new Error(data.error || 'Registration failed');
+            if (response.status !== 200) {
+                throw new Error(data.error || "Registration failed");
             }
 
             if (data.success) {
                 router.push("/");
             }
         } catch (err) {
-            setSubmitError(err.message || 'An unexpected error occurred');
+            setSubmitError(err.message || "An unexpected error occurred");
         } finally {
             setLoading(false);
         }
@@ -195,13 +193,13 @@ export default function RegisterMosque() {
 
                         <div className="text-gray-600 text-xs mt-4">
                             <p>
-                                Mosque who use our service may have uploaded mosque contact information to Eqariah.{" "}
+                                Mosque who use our service may have uploaded mosque contact information to Eqariah. {" "}
                                 <a href="#" className="text-blue-500 underline">Learn more.</a>
                             </p>
                             <p className="mt-2">
-                                By clicking Sign Up, you agree to our{" "}
-                                <a href="#" className="text-blue-500 underline">Terms</a>,{" "}
-                                <a href="#" className="text-blue-500 underline">Privacy Policy</a> and{" "}
+                                By clicking Sign Up, you agree to our {" "}
+                                <a href="#" className="text-blue-500 underline">Terms</a>, {" "}
+                                <a href="#" className="text-blue-500 underline">Privacy Policy</a> and {" "}
                                 <a href="#" className="text-blue-500 underline">Cookies Policy</a>.
                             </p>
                             <p className="mt-1">You may receive Email from us.</p>
@@ -228,4 +226,4 @@ export default function RegisterMosque() {
             <Footer />
         </>
     );
-};
+}

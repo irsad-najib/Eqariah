@@ -85,7 +85,7 @@ export default function Register() {
         }
 
         try {
-            const response = await axios.post('https://ec2-13-239-232-246.ap-southeast-2.compute.amazonaws.com/api/auth/register', {
+            const response = await axios.post('https://eqariahapi.hopto.org/api/auth/register', {
                 username: formData.username,
                 email: formData.email,
                 password: formData.password

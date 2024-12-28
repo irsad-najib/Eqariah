@@ -140,7 +140,9 @@ export default function AnnouncementDashboard() {
                 announcement.id === id
                     ? {
                         ...announcement,
-                        inbox_read: [{ is_read: true }]
+                        inbox_read: announcement.inbox_read
+                            ? [...announcement.inbox_read, { is_read: true }]
+                            : [{ is_read: true }]
                     }
                     : announcement
             )
@@ -149,7 +151,7 @@ export default function AnnouncementDashboard() {
         try {
             const response = await axios.post(
                 `https://eqariahapi.hopto.org/api/auth/announcement/read/${id}`,
-                { announcement_id: id },
+                null,
                 {
                     withCredentials: true,
                     headers: {

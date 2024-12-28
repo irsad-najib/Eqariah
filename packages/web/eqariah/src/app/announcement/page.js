@@ -151,7 +151,6 @@ export default function AnnouncementDashboard() {
         try {
             const response = await axios.post(
                 `https://eqariahapi.hopto.org/api/auth/announcement/read/${id}`,
-                null,
                 {
                     withCredentials: true,
                     headers: {

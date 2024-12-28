@@ -55,10 +55,10 @@ export default function AnnouncementDashboard() {
             }
         };
 
+        verifySession();
         if (isAuthenticated) {
             fetchAnnouncements();
-        };
-        verifySession();
+        }
     }, [isAuthenticated, router]);
 
 
@@ -109,7 +109,7 @@ export default function AnnouncementDashboard() {
                 });
 
                 // Refresh announcements
-                const updatedResponse = await axios.get('https://eqariahapi.hopto.org/api/announcements', {
+                const updatedResponse = await axios.get('https://eqariahapi.hopto.org/api/auth/announcements', {
                     withCredentials: true
                 });
                 setAnnouncements(updatedResponse.data);
@@ -131,7 +131,10 @@ export default function AnnouncementDashboard() {
     };
 
     const markAsRead = async (id) => {
-        // Update local state immediately
+        // Create a backup of current state
+        const previousAnnouncements = [...announcements];
+
+        // Optimistically update UI
         setAnnouncements(currentAnnouncements =>
             currentAnnouncements.map(announcement =>
                 announcement.id === id
@@ -144,21 +147,33 @@ export default function AnnouncementDashboard() {
         );
 
         try {
-            await axios.post(`https://eqariahapi.hopto.org/api/auth/announcement/read/${id}`, {}, {
+            const response = await axios.post(
+                `https://eqariahapi.hopto.org/api/auth/announcement/read/${id}`,
+                { announcement_id: id },
+                {
+                    withCredentials: true,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+
+            if (!response.data.success) {
+                // If server indicates failure, revert to previous state
+                setAnnouncements(previousAnnouncements);
+                throw new Error(response.data.message);
+            }
+
+            // Refresh the announcements to ensure sync with server
+            const refreshResponse = await axios.get('https://eqariahapi.hopto.org/api/auth/announcements', {
                 withCredentials: true
             });
-            // Fetch the latest data from server to ensure synchronization
-            const response = await axios.get('https://eqariahapi.hopto.org/api/auth/announcements', {
-                withCredentials: true
-            });
-            setAnnouncements(response.data);
+            setAnnouncements(refreshResponse.data);
+
         } catch (err) {
-            // Revert the local state if the API call fails
             console.error('Mark as read error:', err.response ? err.response.data : err.message);
-            const response = await axios.get('https://eqariahapi.hopto.org/api/auth/announcements', {
-                withCredentials: true
-            });
-            setAnnouncements(response.data);
+            // Revert to previous state on error
+            setAnnouncements(previousAnnouncements);
         }
     };
 

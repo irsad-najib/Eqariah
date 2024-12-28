@@ -149,10 +149,12 @@ export default function AnnouncementDashboard() {
         );
 
         try {
+            // Send mark as read request
             const response = await axios.post(
                 `https://eqariahapi.hopto.org/api/auth/announcement/read/${id}`,
+                {}, // Empty body
                 {
-                    withCredentials: true,
+                    withCredentials: true, // Move here
                     headers: {
                         "Content-Type": "application/json"
                     }
@@ -177,6 +179,7 @@ export default function AnnouncementDashboard() {
             setAnnouncements(previousAnnouncements);
         }
     };
+
 
     const handleLogout = async () => {
         try {

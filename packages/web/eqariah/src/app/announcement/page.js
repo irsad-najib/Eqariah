@@ -131,16 +131,34 @@ export default function AnnouncementDashboard() {
     };
 
     const markAsRead = async (id) => {
+        // Update local state immediately
+        setAnnouncements(currentAnnouncements =>
+            currentAnnouncements.map(announcement =>
+                announcement.id === id
+                    ? {
+                        ...announcement,
+                        inbox_read: [{ is_read: true }]
+                    }
+                    : announcement
+            )
+        );
+
         try {
             await axios.post(`https://eqariahapi.hopto.org/api/auth/announcement/read/${id}`, {}, {
                 withCredentials: true
             });
+            // Fetch the latest data from server to ensure synchronization
             const response = await axios.get('https://eqariahapi.hopto.org/api/auth/announcements', {
                 withCredentials: true
             });
             setAnnouncements(response.data);
         } catch (err) {
+            // Revert the local state if the API call fails
             console.error('Mark as read error:', err.response ? err.response.data : err.message);
+            const response = await axios.get('https://eqariahapi.hopto.org/api/auth/announcements', {
+                withCredentials: true
+            });
+            setAnnouncements(response.data);
         }
     };
 

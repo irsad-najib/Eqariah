@@ -83,7 +83,7 @@ export default function Home() {
                                 <img
                                     src={image}
                                     alt={`Slide ${index + 1}`}
-                                    className="w-full h-full object-cover"
+                                    className='w-full h-[600px] object-cover'
                                 />
                             </SwiperSlide>
                         ))}

@@ -391,19 +391,82 @@ router.post('/announcement/read/:id', authenticateToken, async (req, res) => {
     try {
         const { id } = req.params;
 
-        await prisma.inbox_read.create({
-            data: {
-                inbox_id: parseInt(id),
-                users_id: req.userId,
-                is_read: true
+        // Validate user ID from token
+        if (!req.user?.userId) {
+            return res.status(401).json({
+                authenticated: false,
+                error: 'User ID is missing or invalid'
+            });
+        }
+
+        const userId = req.user.userId;
+
+        // Check if the inbox exists
+        const inbox = await prisma.inbox.findUnique({
+            where: {
+                id: parseInt(id)
             }
         });
 
-        res.json({ message: "Announcement is marked as read" });
+        if (!inbox) {
+            return res.status(404).json({
+                success: false,
+                message: "Announcement not found"
+            });
+        }
+
+        // Check if user exists
+        const user = await prisma.users.findUnique({
+            where: {
+                id: userId // Gunakan userId dari req.user
+            }
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        // Check if already read
+        const existingRead = await prisma.inbox_read.findFirst({
+            where: {
+                inbox_id: parseInt(id),
+                users_id: userId
+            }
+        });
+
+        if (existingRead) {
+            return res.json({
+                success: true,
+                message: "Announcement already marked as read"
+            });
+        }
+
+        // Create the inbox_read record
+        await prisma.inbox_read.create({
+            data: {
+                is_read: true,
+                inbox_id: parseInt(id),
+                users_id: userId
+            }
+        });
+
+        res.json({
+            success: true,
+            message: "Announcement marked as read"
+        });
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        console.error('Server error:', err);
+        res.status(500).json({
+            success: false,
+            message: "Failed to mark announcement as read",
+            error: err.message
+        });
     }
 });
+
 
 router.get('/role', async (req, res) => {
     const { role } = req.query; // Ubah ke req.query

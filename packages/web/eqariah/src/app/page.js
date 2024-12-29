@@ -27,22 +27,22 @@ export default function Home() {
         gsap.to(boxref1.curent, { ease: "power1.inOut", duration: 2.5 });
     }, []);
     const clients = [
-        { id: 1, src: "/bx-user.svg", name: 'gambar sementara' },
-        { id: 2, src: "/bx-user.svg", name: 'gambar sementara' },
-        { id: 3, src: "/bx-user.svg", name: 'gambar sementara' },
-        { id: 4, src: "/bx-user.svg", name: 'gambar sementara' },
-        { id: 5, src: "/bx-user.svg", name: 'gambar sementara' },
-        { id: 6, src: "/bx-user.svg", name: 'gambar sementara' },
-        { id: 7, src: "/bx-user.svg", name: 'gambar sementara' },
-        { id: 8, src: "/bx-user.svg", name: 'gambar sementara' },
-        { id: 9, src: "/bx-user.svg", name: 'gambar sementara' },
-        { id: 10, src: "/bx-user.svg", name: 'gambar sementara' },
-        { id: 11, src: "/bx-user.svg", name: 'gambar sementara' }
+        { id: 1, src: "/image-removebg-preview.png", name: 'gambar sementara' },
+        { id: 2, src: "/image-removebg-preview (1).png", name: 'gambar sementara' },
+        { id: 3, src: "/image-removebg-preview (2).png", name: 'gambar sementara' },
+        { id: 4, src: "/image-removebg-preview (3).png", name: 'gambar sementara' },
+        { id: 5, src: "/image-removebg-preview.png", name: 'gambar sementara' },
+        { id: 6, src: "/image-removebg-preview (1).png", name: 'gambar sementara' },
+        { id: 7, src: "/image-removebg-preview (2).png", name: 'gambar sementara' },
+        { id: 8, src: "/image-removebg-preview (3).png", name: 'gambar sementara' },
+        { id: 9, src: "/image-removebg-preview.png", name: 'gambar sementara' },
+        { id: 10, src: "/image-removebg-preview (1).png", name: 'gambar sementara' },
+        { id: 11, src: "/image-removebg-preview (2).png", name: 'gambar sementara' }
     ]
     const handleButtonClick = () => {
         setSelectedButton();
     };
-    const image = ["/vercel.svg", "/vercel.svg", "/vercel.svg"];
+    const image = ["/masjid1 (2).jpg", "/masjid2.jpg", "/masjid3.jpg"];
     const [isClient, setIsClient] = React.useState(false);
 
     useEffect(() => {
@@ -134,11 +134,11 @@ export default function Home() {
                         <div className="text-center shadow-lg bg-gray-50">
                             <div className="bg-gray-100 rounded-full p-[4%] inline-block m-[4%] lg:p-4">
                                 <Image
-                                    src="/bx-user.svg"
-                                    width={60}
-                                    height={60}
+                                    src="/download (1).jpeg"
+                                    width={120}
+                                    height={120}
                                     alt="sementara"
-                                    className="md:w-24"
+                                    className="md:w-32"
                                 />
                             </div>
                             <h3 className="text-[4.3vw] font-bold mb-[2%] lg:text-2xl lg:m-4">Membership Organisations</h3>
@@ -150,11 +150,11 @@ export default function Home() {
                         <div className="text-center shadow-lg bg-gray-50">
                             <div className="bg-gray-100 rounded-full p-[4%] inline-block m-[4%] lg:p-4">
                                 <Image
-                                    src="/bx-user.svg"
-                                    width={60}
-                                    height={60}
+                                    src="/download (2).jpeg"
+                                    width={120}
+                                    height={120}
                                     alt="sementara"
-                                    className="md:w-24"
+                                    className="md:w-32"
                                 />
                             </div>
                             <h3 className="text-[4.3vw] font-bold mb-[2%] lg:text-2xl lg:m-4">National Associations</h3>
@@ -166,11 +166,11 @@ export default function Home() {
                         <div className="text-center shadow-lg bg-gray-50">
                             <div className="bg-gray-100 rounded-full p-[4%] inline-block m-[4%] lg:p-4">
                                 <Image
-                                    src="/bx-user.svg"
-                                    width={60}
-                                    height={60}
+                                    src="/download (3).jpeg"
+                                    width={120}
+                                    height={120}
                                     alt="sementara"
-                                    className="md:w-24"
+                                    className="md:w-32"
                                 />
                             </div>
                             <h3 className="text-[4.3vw] font-bold mb-[2%] lg:text-2xl lg:m-4">Clubs And Groups</h3>
@@ -184,7 +184,7 @@ export default function Home() {
             <section className="flex flex-col justify-evenly items-center p-[10%] lg:p-20">
                 <div className="flex">
                     <Image
-                        src="/section4.svg"
+                        src="/download (5).jpeg"
                         width={600}
                         height={400}
                         alt="sementara"
@@ -214,7 +214,7 @@ export default function Home() {
             <section className=" flex flex-col p-[10%] lg:p-20 justify-evenly items-center">
                 <div className="flex mb-[4%]">
                     <Image
-                        src="/section6.svg"
+                        src="/download (6).jpeg"
                         width={600}
                         height={400}
                         alt="sementara"
@@ -231,7 +231,7 @@ export default function Home() {
             <section className="flex flex-col p-[10%] lg:p-20 justify-evenly items-center bg-[#F5F7FA]">
                 <div className="flex py-[6%] lg:py-6">
                     <Image
-                        src="/next.svg"
+                        src="/image-removebg-preview (5).png"
                         width={600}
                         height={400}
                         alt="sementara"
@@ -242,14 +242,17 @@ export default function Home() {
                     <h1 className='text-[#4CAF4F] py-[3%] lg:py-3'>Tim Smith</h1>
                     <h1 className='text-gray-400'>British Dragon Boat Racing Association</h1>
                     <ul className='flex gap-3 pt-[4%] lg:pt-4'>
-                        <li><Image src="/bx-user.svg" alt='customer' width={33} height={33} /></li>
-                        <li><Image src="/bx-user.svg" alt='customer' width={33} height={33} /></li> <li><Image src="/bx-user.svg" alt='customer' width={33} height={33} /></li> <li><Image src="/bx-user.svg" alt='customer' width={33} height={33} /></li> <li><Image src="/bx-user.svg" alt='customer' width={33} height={33} /></li>
+                        <li><Image src="/image-removebg-preview.png" alt='customer' width={33} height={33} /></li>
+                        <li><Image src="/image-removebg-preview (1).png" alt='customer' width={33} height={33} /></li>
+                        <li><Image src="/image-removebg-preview (2).png" alt='customer' width={33} height={33} /></li>
+                        <li><Image src="/image-removebg-preview (3).png" alt='customer' width={33} height={33} /></li>
+                        <li><Image src="/image-removebg-preview.png" alt='customer' width={33} height={33} /></li>
                         <li className='text-[#4ACF4F]'>Meet all customer →</li>
                     </ul>
                 </div>
             </section>
 
-            <section className='p-[10%] lg:p-20'>
+            <section className='p-[10%] lg:p-20 pb-[20%] lg:pb-40'>
                 <div>
                     <h1 className='flex justify-center text-[8vw] md:text-[5vw] lg:text-4xl font-bold'>Caring is the new marketing</h1>
                     <a className='flex text-center justify-center md:text-[2vw] lg:text-xl lg:pt-4'>The Nextcent is the best place to read about the lastest membership insght, trends and more. See who's joining the community, read about how our community are increasing their membership income and lot's more</a>
@@ -257,7 +260,7 @@ export default function Home() {
                 <div className='flex flex-col lg:flex-row p-[10%] lg:p-10 justify-around items-center text-center gap-40 lg:gap-20'>
                     <div className='relative rounded-md shadow-md p-[4%] '>
                         <Image
-                            src='/bx-user.svg'
+                            src='/image-removebg-preview.png'
                             alt='sementara'
                             width={330}
                             height={200}
@@ -269,7 +272,7 @@ export default function Home() {
                     </div>
                     <div className='relative rounded-md shadow-md p-[4%] '>
                         <Image
-                            src='/bx-user.svg'
+                            src='/image-removebg-preview (1).png'
                             alt='sementara'
                             width={330}
                             height={200}
@@ -281,7 +284,7 @@ export default function Home() {
                     </div>
                     <div className='relative rounded-md shadow-md p-[4%] '>
                         <Image
-                            src='/bx-user.svg'
+                            src='/image-removebg-preview (2).png'
                             alt='sementara'
                             width={330}
                             height={200}

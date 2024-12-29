@@ -6,8 +6,8 @@ const Footer = () => {
         <footer className="bg-black flex flex-col-reverse lg:flex-row text-white p-10 justify-center lg:justify-around">
             <div className="flex flex-col">
                 <div className="flex flex-row gap-4 items-center justify-center py-4">
-                    <Image src="/dribble.svg" alt="logo" width={100} height={100} />
-                    <h1 className="text-3xl font-bold">Eqariah</h1>
+                    <Image src="/eqariah.svg" alt="logo" width={100} height={100} className='dark:invert' />
+                    <h1 className="text-3xl font-bold ">Eqariah</h1>
                 </div>
                 <p>Copyright © 2024 Irsad Gamma</p>
                 <p className="py-4">All rights reserved</p>

@@ -28,7 +28,7 @@ export default function Navbar() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const response = await axios.get('https://eqariahapi.hopto.org/api/auth/verify-session', {
+                const response = await axios.get('https://eqariah.vercel.app/api/auth/verify-session', {
                     withCredentials: true,
                     headers: {
                         'Accept': 'application/json',
@@ -58,7 +58,7 @@ export default function Navbar() {
 
     const handleLogout = async () => {
         try {
-            await axios.post('https://eqariahapi.hopto.org/api/auth/logout', {}, {
+            await axios.post('https://eqariah.vercel.app/api/auth/logout', {}, {
                 withCredentials: true,
                 headers: {
                     'Accept': 'application/json',

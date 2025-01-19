@@ -85,7 +85,7 @@ export default function Register() {
         }
 
         try {
-            const response = await axios.post('https://eqariahapi.hopto.org/api/auth/register', {
+            const response = await axios.post('https://eqariah.vercel.app/api/auth/register', {
                 username: formData.username,
                 email: formData.email,
                 password: formData.password

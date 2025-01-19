@@ -63,7 +63,7 @@ export default function RegisterMosque() {
         setLoading(true);
         try {
             const response = await axios.post(
-                "https://eqariahapi.hopto.org/api/auth/registerMosque",
+                "https://eqariah.vercel.app/api/auth/registerMosque",
                 formDataObject,
                 {
                     headers: {

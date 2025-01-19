@@ -55,7 +55,7 @@ export default function Login() {
         }
 
         try {
-            const response = await axios.post("https://eqariahapi.hopto.org/api/auth/login", formData, {
+            const response = await axios.post("http://localhost:3001/api/auth/login", formData, {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",

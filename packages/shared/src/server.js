@@ -12,14 +12,14 @@ const app = express();
 const prisma = new PrismaClient();
 const PORT = process.env.PORT;
 const corsOptions = {
-    origin: ['https://eqariah.vercel.app', process.env.FRONTEND_URL],
+    origin: process.env.FRONTEND_URL.split(','),
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Set-Cookie', 'Access-Control-Allow-Headers'],
     exposedHeaders: ['Set-Cookie'],
     credentials: true,
     optionsSuccessStatus: 200
 }
-console.log(process.env.FRONTEND_URL)
+console.log('Allowed Origins:', corsOptions.origin);
 
 app.use(cookieParser());
 app.use(cors(corsOptions));
@@ -50,7 +50,7 @@ prisma.$on('query', (e) => {
     console.log(`Duration ${e.duration}ms`);
 });
 
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 

@@ -118,7 +118,7 @@ router.post('/login', async (req, res) => {
 
         res.cookie('authToken', token, {
             httpOnly: true,
-            secure: true,  // Karena menggunakan HTTPS (x-forwarded-proto: 'https')
+            secure: false,  // Karena menggunakan HTTPS (x-forwarded-proto: 'https')
             sameSite: 'none',
             maxAge: 24 * 60 * 60 * 1000,
             path: '/',
@@ -203,7 +203,7 @@ router.post('/logout', (req, res) => {
 
         res.clearCookie('authToken', {
             httpOnly: true,
-            secure: true,
+            secure: false,
             sameSite: 'none',
             path: '/'
         });

@@ -14,7 +14,6 @@ export default function AnnouncementDashboard() {
         category_id: ''
     });
 
-    // Form management state
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);

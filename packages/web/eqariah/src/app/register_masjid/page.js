@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import Footer from "../component/footer";
 import Navbar from "../component/Navbar";
-import axiosInstance from "../component/axiosIntance";
+import axios from "axios";
 
 export default function RegisterMosque() {
     const router = useRouter();
@@ -62,9 +62,14 @@ export default function RegisterMosque() {
 
         setLoading(true);
         try {
-            const response = await axiosInstance.post(
-                "/api/auth/registerMosque",
-                formDataObject
+            const response = await axios.post(
+                "https://8a1b-36-78-38-21.ngrok-free.app/api/auth/registerMosque",
+                formDataObject,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
             );
 
             if (response.status === 201) {

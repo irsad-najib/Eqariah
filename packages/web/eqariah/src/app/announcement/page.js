@@ -1,7 +1,7 @@
 "use client"
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import axiosInstance from "../component/axiosIntance";
 
 export default function AnnouncementDashboard() {
     const router = useRouter();
@@ -28,7 +28,7 @@ export default function AnnouncementDashboard() {
     useEffect(() => {
         const verifySession = async () => {
             try {
-                const response = await axiosInstance.get('/api/auth/verify-session', {
+                const response = await axios.get('https://8a1b-36-78-38-21.ngrok-free.app/api/auth/verify-session', {
                     withCredentials: true
                 });
 
@@ -46,7 +46,7 @@ export default function AnnouncementDashboard() {
 
         const fetchAnnouncements = async () => {
             try {
-                const response = await axiosInstance.get('/api/auth/announcements', {
+                const response = await axios.get('https://8a1b-36-78-38-21.ngrok-free.app/api/auth/announcements', {
                     withCredentials: true
                 });
                 setAnnouncements(response.data);
@@ -89,11 +89,14 @@ export default function AnnouncementDashboard() {
         }
 
         try {
-            const response = await axiosInstance.post(
-                '/api/auth/announcement',
+            const response = await axios.post(
+                'https://8a1b-36-78-38-21.ngrok-free.app/api/auth/announcement',
                 newAnnouncement,
                 {
                     withCredentials: true,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
                 }
             );
 
@@ -106,7 +109,7 @@ export default function AnnouncementDashboard() {
                 });
 
                 // Refresh announcements
-                const updatedResponse = await axiosInstance.get('/api/auth/announcements', {
+                const updatedResponse = await axios.get('https://8a1b-36-78-38-21.ngrok-free.app/api/auth/announcements', {
                     withCredentials: true
                 });
                 setAnnouncements(updatedResponse.data);
@@ -147,11 +150,14 @@ export default function AnnouncementDashboard() {
 
         try {
             // Send mark as read request
-            const response = await axiosInstance.post(
-                `/api/auth/announcement/read/${id}`,
+            const response = await axios.post(
+                `https://8a1b-36-78-38-21.ngrok-free.app/api/auth/announcement/read/${id}`,
                 {}, // Empty body
                 {
-                    withCredentials: true,
+                    withCredentials: true, // Move here
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
                 }
             );
 
@@ -162,7 +168,7 @@ export default function AnnouncementDashboard() {
             }
 
             // Refresh the announcements to ensure sync with server
-            const refreshResponse = await axiosInstance.get('/api/auth/announcements', {
+            const refreshResponse = await axios.get('https://8a1b-36-78-38-21.ngrok-free.app/api/auth/announcements', {
                 withCredentials: true
             });
             setAnnouncements(refreshResponse.data);
@@ -177,7 +183,7 @@ export default function AnnouncementDashboard() {
 
     const handleLogout = async () => {
         try {
-            await axiosInstance.post('/api/auth/logout', {}, {
+            await axios.post('https://8a1b-36-78-38-21.ngrok-free.app/api/auth/logout', {}, {
                 withCredentials: true
             });
             router.replace('/login');

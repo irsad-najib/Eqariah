@@ -1,10 +1,10 @@
 "use client"
 import React, { useState } from "react"
 import { Eye, EyeOff } from "lucide-react";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import Footer from "../component/footer";
 import Navbar from "../component/Navbar";
-import axiosInstance from "../component/axiosIntance";
 
 export default function Register() {
     const router = useRouter();
@@ -85,10 +85,14 @@ export default function Register() {
         }
 
         try {
-            const response = await axiosInstance.post('/api/auth/register', {
+            const response = await axios.post('https://f5c7-125-160-108-193.ngrok-free.app/api/auth/register', {
                 username: formData.username,
                 email: formData.email,
                 password: formData.password
+            }, {
+                headers: {
+                    "Content-Type": 'application/json'
+                },
             });
 
             if (response.data) {

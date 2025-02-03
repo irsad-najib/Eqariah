@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import axiosInstance from "./axiosIntance";
 
@@ -29,7 +28,13 @@ export default function Navbar() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const response = await axiosInstance.get('/api/auth/verify-session');
+                const response = await axiosInstance.get('/api/auth/verify-session', {
+                    withCredentials: true,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
 
                 if (response.data && response.data.user) {
                     setIsLogin(true);
@@ -53,7 +58,9 @@ export default function Navbar() {
 
     const handleLogout = async () => {
         try {
-            await axiosInstance.post('/api/auth/logout', {});
+            await axiosInstance.post('/api/auth/logout', {}, {
+                withCredentials: true,
+            });
 
             console.log('Status sebelum diperbarui:', isLogin);
             setIsLogin(false);

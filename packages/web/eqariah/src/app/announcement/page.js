@@ -1,8 +1,7 @@
 "use client"
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import axiosInstance from "axios";
+import axiosInstance from "../component/axiosIntance";
 
 export default function AnnouncementDashboard() {
     const router = useRouter();
@@ -29,7 +28,9 @@ export default function AnnouncementDashboard() {
     useEffect(() => {
         const verifySession = async () => {
             try {
-                const response = await axiosInstance.get('/api/auth/verify-session');
+                const response = await axiosInstance.get('/api/auth/verify-session', {
+                    withCredentials: true
+                });
 
                 if (response.data.authenticated) {
                     setIsAuthenticated(true);
@@ -45,7 +46,9 @@ export default function AnnouncementDashboard() {
 
         const fetchAnnouncements = async () => {
             try {
-                const response = await axiosInstance.get('/api/auth/announcements');
+                const response = await axiosInstance.get('/api/auth/announcements', {
+                    withCredentials: true
+                });
                 setAnnouncements(response.data);
             } catch (err) {
                 console.error("Error fetching announcements", err);
@@ -89,6 +92,9 @@ export default function AnnouncementDashboard() {
             const response = await axiosInstance.post(
                 '/api/auth/announcement',
                 newAnnouncement,
+                {
+                    withCredentials: true,
+                }
             );
 
             if (response.status === 201) {
@@ -100,7 +106,9 @@ export default function AnnouncementDashboard() {
                 });
 
                 // Refresh announcements
-                const updatedResponse = await axiosInstance.get('/api/auth/announcements');
+                const updatedResponse = await axiosInstance.get('/api/auth/announcements', {
+                    withCredentials: true
+                });
                 setAnnouncements(updatedResponse.data);
             }
         } catch (err) {
@@ -141,7 +149,10 @@ export default function AnnouncementDashboard() {
             // Send mark as read request
             const response = await axiosInstance.post(
                 `/api/auth/announcement/read/${id}`,
-                {},
+                {}, // Empty body
+                {
+                    withCredentials: true,
+                }
             );
 
             if (!response.data.success) {
@@ -151,7 +162,9 @@ export default function AnnouncementDashboard() {
             }
 
             // Refresh the announcements to ensure sync with server
-            const refreshResponse = await axiosInstance.get('/api/auth/announcements');
+            const refreshResponse = await axiosInstance.get('/api/auth/announcements', {
+                withCredentials: true
+            });
             setAnnouncements(refreshResponse.data);
 
         } catch (err) {
@@ -164,7 +177,9 @@ export default function AnnouncementDashboard() {
 
     const handleLogout = async () => {
         try {
-            await axiosInstance.post('/api/auth/logout', {});
+            await axiosInstance.post('/api/auth/logout', {}, {
+                withCredentials: true
+            });
             router.replace('/login');
         } catch (error) {
             console.error('Logout error:', error);

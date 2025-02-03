@@ -1,7 +1,6 @@
 "use client"
 import React, { useState } from "react"
 import { Eye, EyeOff } from "lucide-react";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import Footer from "../component/footer";
 import Navbar from "../component/Navbar";

@@ -4,7 +4,6 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import Footer from "../component/footer";
 import Navbar from "../component/Navbar";
-import axios from "axios";
 import axiosInstance from "../component/axiosIntance";
 
 export default function RegisterMosque() {

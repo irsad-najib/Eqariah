@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import Navbar from "../component/Navbar";
 import Footer from "../component/footer";
@@ -27,7 +26,9 @@ export default function Login() {
     useEffect(() => {
         const chekAuthStatus = async () => {
             try {
-                const response = await axiosInstance.get('/api/auth/verify-session');
+                const response = await axiosInstance.get('/api/auth/verify-session', {
+                    withCredentials: true
+                });
 
                 if (response.data.authenticated) {
                     setIsLoggedIn(true);
@@ -54,7 +55,9 @@ export default function Login() {
         }
 
         try {
-            const response = await axiosInstance.post("/api/auth/login", formData);
+            const response = await axiosInstance.post('/api/auth/login', formData, {
+                withCredentials: true,
+            });
             console.log('Response headers:', response.headers);
             console.log('Response cookies:', response.headers['set-cookie']);
             document.cookie.split(';').forEach(cookie => {

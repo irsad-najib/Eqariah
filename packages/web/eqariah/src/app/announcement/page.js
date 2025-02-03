@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import axiosInstance from "axios";
 
 export default function AnnouncementDashboard() {
     const router = useRouter();
@@ -28,9 +29,7 @@ export default function AnnouncementDashboard() {
     useEffect(() => {
         const verifySession = async () => {
             try {
-                const response = await axios.get('https://f5c7-125-160-108-193.ngrok-free.app/api/auth/verify-session', {
-                    withCredentials: true
-                });
+                const response = await axiosInstance.get('/api/auth/verify-session');
 
                 if (response.data.authenticated) {
                     setIsAuthenticated(true);
@@ -46,9 +45,7 @@ export default function AnnouncementDashboard() {
 
         const fetchAnnouncements = async () => {
             try {
-                const response = await axios.get('https://f5c7-125-160-108-193.ngrok-free.app/api/auth/announcements', {
-                    withCredentials: true
-                });
+                const response = await axiosInstance.get('/api/auth/announcements');
                 setAnnouncements(response.data);
             } catch (err) {
                 console.error("Error fetching announcements", err);
@@ -89,15 +86,9 @@ export default function AnnouncementDashboard() {
         }
 
         try {
-            const response = await axios.post(
-                'https://f5c7-125-160-108-193.ngrok-free.app/api/auth/announcement',
+            const response = await axiosInstance.post(
+                '/api/auth/announcement',
                 newAnnouncement,
-                {
-                    withCredentials: true,
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }
             );
 
             if (response.status === 201) {
@@ -109,9 +100,7 @@ export default function AnnouncementDashboard() {
                 });
 
                 // Refresh announcements
-                const updatedResponse = await axios.get('https://f5c7-125-160-108-193.ngrok-free.app/api/auth/announcements', {
-                    withCredentials: true
-                });
+                const updatedResponse = await axiosInstance.get('/api/auth/announcements');
                 setAnnouncements(updatedResponse.data);
             }
         } catch (err) {
@@ -150,15 +139,9 @@ export default function AnnouncementDashboard() {
 
         try {
             // Send mark as read request
-            const response = await axios.post(
-                `https://f5c7-125-160-108-193.ngrok-free.app/api/auth/announcement/read/${id}`,
-                {}, // Empty body
-                {
-                    withCredentials: true, // Move here
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }
+            const response = await axiosInstance.post(
+                `/api/auth/announcement/read/${id}`,
+                {},
             );
 
             if (!response.data.success) {
@@ -168,9 +151,7 @@ export default function AnnouncementDashboard() {
             }
 
             // Refresh the announcements to ensure sync with server
-            const refreshResponse = await axios.get('https://f5c7-125-160-108-193.ngrok-free.app/api/auth/announcements', {
-                withCredentials: true
-            });
+            const refreshResponse = await axiosInstance.get('/api/auth/announcements');
             setAnnouncements(refreshResponse.data);
 
         } catch (err) {
@@ -183,9 +164,7 @@ export default function AnnouncementDashboard() {
 
     const handleLogout = async () => {
         try {
-            await axios.post('https://f5c7-125-160-108-193.ngrok-free.app/api/auth/logout', {}, {
-                withCredentials: true
-            });
+            await axiosInstance.post('/api/auth/logout', {});
             router.replace('/login');
         } catch (error) {
             console.error('Logout error:', error);

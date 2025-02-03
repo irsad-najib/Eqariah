@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import axiosInstance from "./axiosIntance";
 
 const NavLink = ({ href, children, className = "" }) => (
     <Link
@@ -28,13 +29,7 @@ export default function Navbar() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const response = await axios.get('https://f5c7-125-160-108-193.ngrok-free.app/api/auth/verify-session', {
-                    withCredentials: true,
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                });
+                const response = await axiosInstance.get('/api/auth/verify-session');
 
                 if (response.data && response.data.user) {
                     setIsLogin(true);
@@ -58,13 +53,7 @@ export default function Navbar() {
 
     const handleLogout = async () => {
         try {
-            await axios.post('https://f5c7-125-160-108-193.ngrok-free.app/api/auth/logout', {}, {
-                withCredentials: true,
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            });
+            await axiosInstance.post('/api/auth/logout', {});
 
             console.log('Status sebelum diperbarui:', isLogin);
             setIsLogin(false);

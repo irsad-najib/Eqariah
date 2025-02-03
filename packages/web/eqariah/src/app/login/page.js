@@ -5,6 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Navbar from "../component/Navbar";
 import Footer from "../component/footer";
+import axiosInstance from "../component/axiosIntance";
 
 export default function Login() {
     const router = useRouter();
@@ -26,9 +27,7 @@ export default function Login() {
     useEffect(() => {
         const chekAuthStatus = async () => {
             try {
-                const response = await axios.get('https://f5c7-125-160-108-193.ngrok-free.app/api/auth/verify-session', {
-                    withCredentials: true
-                });
+                const response = await axiosInstance.get('/api/auth/verify-session');
 
                 if (response.data.authenticated) {
                     setIsLoggedIn(true);
@@ -55,14 +54,7 @@ export default function Login() {
         }
 
         try {
-            const response = await axios.post("https://f5c7-125-160-108-193.ngrok-free.app/api/auth/login", formData, {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                },
-                withCredentials: true,
-                timeout: 10000
-            });
+            const response = await axiosInstance.post("/api/auth/login", formData);
             console.log('Response headers:', response.headers);
             console.log('Response cookies:', response.headers['set-cookie']);
             document.cookie.split(';').forEach(cookie => {

@@ -85,7 +85,7 @@ export default function Register() {
         }
 
         try {
-            const response = await axios.post('https://8a1b-36-78-38-21.ngrok-free.app/api/auth/register', {
+            const response = await axios.post('https://c022-36-78-38-21.ngrok-free.app/api/auth/register', {
                 username: formData.username,
                 email: formData.email,
                 password: formData.password

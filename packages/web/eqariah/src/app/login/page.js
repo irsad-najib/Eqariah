@@ -26,7 +26,7 @@ export default function Login() {
     useEffect(() => {
         const chekAuthStatus = async () => {
             try {
-                const response = await axios.get('https://8a1b-36-78-38-21.ngrok-free.app/api/auth/verify-session', {
+                const response = await axios.get('https://c022-36-78-38-21.ngrok-free.app/api/auth/verify-session', {
                     withCredentials: true
                 });
 
@@ -55,7 +55,7 @@ export default function Login() {
         }
 
         try {
-            const response = await axios.post("https://8a1b-36-78-38-21.ngrok-free.app/api/auth/login", formData, {
+            const response = await axios.post("https://c022-36-78-38-21.ngrok-free.app/api/auth/login", formData, {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",

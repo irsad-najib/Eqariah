@@ -27,7 +27,7 @@ export default function AnnouncementDashboard() {
     useEffect(() => {
         const verifySession = async () => {
             try {
-                const response = await axios.get('https://8a1b-36-78-38-21.ngrok-free.app/api/auth/verify-session', {
+                const response = await axios.get('https://c022-36-78-38-21.ngrok-free.app/api/auth/verify-session', {
                     withCredentials: true
                 });
 
@@ -45,7 +45,7 @@ export default function AnnouncementDashboard() {
 
         const fetchAnnouncements = async () => {
             try {
-                const response = await axios.get('https://8a1b-36-78-38-21.ngrok-free.app/api/auth/announcements', {
+                const response = await axios.get('https://c022-36-78-38-21.ngrok-free.app/api/auth/announcements', {
                     withCredentials: true
                 });
                 setAnnouncements(response.data);
@@ -89,7 +89,7 @@ export default function AnnouncementDashboard() {
 
         try {
             const response = await axios.post(
-                'https://8a1b-36-78-38-21.ngrok-free.app/api/auth/announcement',
+                'https://c022-36-78-38-21.ngrok-free.app/api/auth/announcement',
                 newAnnouncement,
                 {
                     withCredentials: true,
@@ -108,7 +108,7 @@ export default function AnnouncementDashboard() {
                 });
 
                 // Refresh announcements
-                const updatedResponse = await axios.get('https://8a1b-36-78-38-21.ngrok-free.app/api/auth/announcements', {
+                const updatedResponse = await axios.get('https://c022-36-78-38-21.ngrok-free.app/api/auth/announcements', {
                     withCredentials: true
                 });
                 setAnnouncements(updatedResponse.data);
@@ -150,7 +150,7 @@ export default function AnnouncementDashboard() {
         try {
             // Send mark as read request
             const response = await axios.post(
-                `https://8a1b-36-78-38-21.ngrok-free.app/api/auth/announcement/read/${id}`,
+                `https://c022-36-78-38-21.ngrok-free.app/api/auth/announcement/read/${id}`,
                 {}, // Empty body
                 {
                     withCredentials: true, // Move here
@@ -167,7 +167,7 @@ export default function AnnouncementDashboard() {
             }
 
             // Refresh the announcements to ensure sync with server
-            const refreshResponse = await axios.get('https://8a1b-36-78-38-21.ngrok-free.app/api/auth/announcements', {
+            const refreshResponse = await axios.get('https://c022-36-78-38-21.ngrok-free.app/api/auth/announcements', {
                 withCredentials: true
             });
             setAnnouncements(refreshResponse.data);
@@ -182,7 +182,7 @@ export default function AnnouncementDashboard() {
 
     const handleLogout = async () => {
         try {
-            await axios.post('https://8a1b-36-78-38-21.ngrok-free.app/api/auth/logout', {}, {
+            await axios.post('https://c022-36-78-38-21.ngrok-free.app/api/auth/logout', {}, {
                 withCredentials: true
             });
             router.replace('/login');
